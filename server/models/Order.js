@@ -1,20 +1,33 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
 const orderSchema = new Schema({
-  purchaseDate: {
+  OrderDate: {
     type: Date,
-    default: Date.now
+    default: Date.now,
+  },
+  rentalStartDate: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
+  rentalEndDate: {
+    type: Date,
+    required: true,
   },
   products: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Product'
-    }
-  ]
+      ref: "Product",
+    },
+  ],
+  cost: {
+    type: Number,
+    required: true,
+  },
 });
 
-const Order = mongoose.model('Order', orderSchema);
+const Order = mongoose.model("Order", orderSchema);
 
 module.exports = Order;

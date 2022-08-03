@@ -1,36 +1,50 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
+const commentSchema = require("./Comment");
 
-const productSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-    trim: true
+const productSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    description: {
+      type: String,
+      required: true,
+      min: [1, "This field must be filled in!"],
+      max: [280, "Your description is too long!"],
+    },
+    isRented: {
+      type: Boolean,
+      required: true,
+    },
+    // image: {
+    //   type: String
+    // },
+    dailyPrice: {
+      type: Number,
+      required: true,
+      min: 0.99,
+    },
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: "Category",
+      required: true,
+    },
+    comments: {
+      type: [commentSchema],
+    },
   },
-  description: {
-    type: String
-  },
-  image: {
-    type: String
-  },
-  price: {
-    type: Number,
-    required: true,
-    min: 0.99
-  },
-  quantity: {
-    type: Number,
-    min: 0,
-    default: 0
-  },
-  category: {
-    type: Schema.Types.ObjectId,
-    ref: 'Category',
-    required: true
+  {
+    toJSON: {
+      virtuals: true,
+    },
+    id: false,
   }
-});
+);
 
-const Product = mongoose.model('Product', productSchema);
+const Product = mongoose.model("Product", productSchema);
 
 module.exports = Product;
