@@ -48,7 +48,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/products/:id" element={<Detail />} />
-              <Route path="/profile/:id" element={<Profile />} />
+              <Route path="/profiles/:id" element={<Profile />} />
               <Route path="*" element={<NoMatch />} />
             </Routes>
           </StoreProvider>
