@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 const bcrypt = require("bcrypt");
-const Order = require("./Order");
+const orderSchema = require("./Order");
+const addressSchema = require("./Address");
 
 const userSchema = new Schema(
   {
@@ -10,7 +11,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      // trim: true
+      trim: true,
     },
     email: {
       type: String,
@@ -25,7 +26,6 @@ const userSchema = new Schema(
     name: {
       type: String,
       required: false,
-      // trim: true
     },
     aboutMe: {
       type: String,
@@ -43,13 +43,22 @@ const userSchema = new Schema(
         ref: "Product",
       },
     ],
-    orders: [Order.schema],
-    addresses: [Address.schema],
+    isLender: {
+      type: Boolean,
+      required: true,
+    },
+    isBorrower: {
+      type: Boolean,
+      required: true,
+    },
+    orders: [orderSchema],
+    addresses: [addressSchema],
   },
   {
     toJSON: {
       virtuals: true,
     },
+    id: false,
   }
 );
 
