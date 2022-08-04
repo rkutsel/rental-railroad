@@ -5,6 +5,9 @@ const { Schema } = mongoose;
 const orderSchema = new Schema({
   OrderDate: {
     type: Date,
+    get: (date) => {
+      if (date) return date.toLocaleString().split("T")[0];
+    },
     default: Date.now,
   },
   rentalStartDate: {
@@ -16,12 +19,16 @@ const orderSchema = new Schema({
     type: Date,
     required: true,
   },
-  products: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Product",
-    },
-  ],
+  rentedProduct: {
+    type: Schema.Types.ObjectId,
+    ref: "Product",
+    required: true,
+  },
+  rentedUser: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   cost: {
     type: Number,
     required: true,

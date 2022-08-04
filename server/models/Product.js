@@ -23,7 +23,7 @@ const productSchema = new Schema(
     // image: {
     //   type: String
     // },
-    dailyPrice: {
+    pricePerDay: {
       type: Number,
       required: true,
       min: 0.99,
