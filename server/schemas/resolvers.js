@@ -1,7 +1,7 @@
-const { AuthenticationError } = require('apollo-server-express');
-const { User, Product, Category, Order } = require('../models');
-const { signToken } = require('../utils/auth');
-const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+const { AuthenticationError } = require("apollo-server-express");
+const { User, Product, Category, Order } = require("../models");
+const { signToken } = require("../utils/auth");
+const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
 
 const resolvers = {
@@ -24,36 +24,36 @@ const resolvers = {
         };
       }
 
-      return await Product.find(params).populate('category');
+      return await Product.find(params).populate("category");
     },
 
     product: async (parent, { _id }) => {
-      return await Product.findById(_id).populate('category');
+      return await Product.findById(_id).populate("category");
     },
 
     user: async (parent, args, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id)
-                              .populate({path: 'myRentals', select: ['title', 'image', 'isRented', 'pricePerDay']})
-                              .populate({path: 'myWishList', select:['title', 'image', 'isRented', 'pricePerDay']})
-                              .populate('myOrders');
+                              .populate({path: "myRentals", select: ["title", "image", "isRented", "pricePerDay"]})
+                              .populate({path: "myWishList", select:["title", "image", "isRented", "pricePerDay"]})
+                              .populate("myOrders");
 
         user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
 
         return user;
       }
 
-      throw new AuthenticationError('Not logged in');
+      throw new AuthenticationError("Not logged in");
     },
 
     order: async (parent, { _id }, context) => {
       if (context.user) {
-        const user = await User.findById(context.user._id).populate('product');
+        const user = await User.findById(context.user._id).populate("product");
 
         return user.orders.id(_id);
       }
 
-      throw new AuthenticationError('Not logged in');
+      throw new AuthenticationError("Not logged in");
     },
 
     checkout: async (parent, args, context) => {
@@ -61,7 +61,7 @@ const resolvers = {
       const order = new Order({ products: args.product});
       const line_items = [];
 
-      const { rentedProduct } = await order.populate('rentedProduct');
+      const { rentedProduct } = await order.populate("rentedProduct");
 
         const product = await stripe.products.create({
           name: rentedProduct.name,
@@ -72,7 +72,7 @@ const resolvers = {
         const price = await stripe.prices.create({
           product: product.id,
           unit_amount: order.cost,
-          currency: 'usd',
+          currency: "usd",
         });
 
         line_items.push({
@@ -82,9 +82,9 @@ const resolvers = {
     
 
       const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
+        payment_method_types: ["card"],
         line_items,
-        mode: 'payment',
+        mode: "payment",
         success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${url}/`
       });
@@ -111,7 +111,7 @@ const resolvers = {
         return user;
       }
 
-      throw new AuthenticationError('Not logged in');
+      throw new AuthenticationError("Not logged in");
     },
     
     addToMyRentals: async (parent, { productId }, context) => {
@@ -123,7 +123,7 @@ const resolvers = {
         return user;
       }
 
-      throw new AuthenticationError('Not logged in');
+      throw new AuthenticationError("Not logged in");
     },
 
     addToMyWishlist: async (parent, { productId }, context) => {
@@ -135,7 +135,7 @@ const resolvers = {
         return user;
       }
 
-      throw new AuthenticationError('Not logged in');
+      throw new AuthenticationError("Not logged in");
     },
 
     updateUser: async (parent, args, context) => {
@@ -143,7 +143,7 @@ const resolvers = {
         return await User.findByIdAndUpdate(context.user._id, args, { new: true });
       }
 
-      throw new AuthenticationError('Not logged in');
+      throw new AuthenticationError("Not logged in");
     },
     
     // Function to create order 
@@ -153,7 +153,7 @@ const resolvers = {
       return { order };
       }
 
-      throw new AuthenticationError('Not logged in');
+      throw new AuthenticationError("Not logged in");
     },
 
     // Function to create product 
@@ -162,7 +162,7 @@ const resolvers = {
       const addedProduct = await Product.create(product);
       return { addedProduct };
       }
-      throw new AuthenticationError('Not logged in');
+      throw new AuthenticationError("Not logged in");
     },
 
     // Function to update product 
@@ -170,27 +170,27 @@ const resolvers = {
       if (context.user) {
         return await Product.findByOneAndUpdate({_id: product._id}, product, { new: true });
       }
-      throw new AuthenticationError('Not logged in');
+      throw new AuthenticationError("Not logged in");
     },
     
     addCommentToProduct: (parent, {productId, comment}, context) => {
       if (context.user) {
         return await Product.findByOneAndUpdate( {_id: productId}, { $push: { comments : comment } },{new: true});
       }
-      throw new AuthenticationError('Not logged in');
+      throw new AuthenticationError("Not logged in");
     },
 
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError('Incorrect credentials');
+        throw new AuthenticationError("Incorrect credentials");
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new AuthenticationError('Incorrect credentials');
+        throw new AuthenticationError("Incorrect credentials");
       }
 
       const token = signToken(user);
