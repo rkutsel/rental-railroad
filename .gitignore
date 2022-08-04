@@ -102,4 +102,13 @@ dist
 
 # TernJS port file
 .tern-port
+<<<<<<< HEAD
 ./client/build
+=======
+
+#ignore .DS_Store
+.DS_Store
+
+# build
+client/build
+>>>>>>> 4a50b9f5c66eb3176c22559c38a1bf2f05fea34e
