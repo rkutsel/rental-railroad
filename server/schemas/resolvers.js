@@ -59,13 +59,12 @@ const resolvers = {
       const order = new Order({ products: args.product});
       const line_items = [];
 
-      const { product } = await order.populate('rentedProduct');
+      const { rentedProduct } = await order.populate('rentedProduct');
 
-    
         const product = await stripe.products.create({
-          name: product.name,
-          description: product.description,
-          images: [`${url}/images/${product.image}`]
+          name: rentedProduct.name,
+          description: rentedProduct.description,
+          images: [`${url}/images/${rentedProduct.image}`]
         });
 
         const price = await stripe.prices.create({
