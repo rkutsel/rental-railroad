@@ -1,87 +1,119 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import Auth from '../utils/auth';
-import { ADD_USER } from '../utils/mutations';
+import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { useNavigate } from "react-router-dom";
+import Auth from "../utils/auth";
+import { ADD_USER } from "../utils/mutations";
+import Badge from "react-bootstrap/Badge";
+import Button from "react-bootstrap/Button";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Stack from "react-bootstrap/Stack";
+import Card from "react-bootstrap/Card";
 
 function Signup(props) {
-  const [formState, setFormState] = useState({ email: '', password: '' });
-  const [addUser] = useMutation(ADD_USER);
+	const [formState, setFormState] = useState({ email: "", password: "" });
+	const [addUser] = useMutation(ADD_USER);
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    const mutationResponse = await addUser({
-      variables: {
-        email: formState.email,
-        password: formState.password,
-        firstName: formState.firstName,
-        lastName: formState.lastName,
-      },
-    });
-    const token = mutationResponse.data.addUser.token;
-    Auth.login(token);
-  };
+	const handleFormSubmit = async (event) => {
+		event.preventDefault();
+		const mutationResponse = await addUser({
+			variables: {
+				email: formState.email,
+				password: formState.password,
+				firstName: formState.firstName,
+				lastName: formState.lastName,
+			},
+		});
+		const token = mutationResponse.data.addUser.token;
+		Auth.login(token);
+	};
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormState({
-      ...formState,
-      [name]: value,
-    });
-  };
+	const handleChange = (event) => {
+		const { name, value } = event.target;
+		setFormState({
+			...formState,
+			[name]: value,
+		});
+	};
+	const navigate = useNavigate();
 
-  return (
-    <div className="container my-1">
-      <Link to="/login">← Go to Login</Link>
-
-      <h2>Signup</h2>
-      <form onSubmit={handleFormSubmit}>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="firstName">First Name:</label>
-          <input
-            placeholder="First"
-            name="firstName"
-            type="firstName"
-            id="firstName"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="lastName">Last Name:</label>
-          <input
-            placeholder="Last"
-            name="lastName"
-            type="lastName"
-            id="lastName"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="email">Email:</label>
-          <input
-            placeholder="youremail@test.com"
-            name="email"
-            type="email"
-            id="email"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="pwd">Password:</label>
-          <input
-            placeholder="******"
-            name="password"
-            type="password"
-            id="pwd"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row flex-end">
-          <button type="submit">Submit</button>
-        </div>
-      </form>
-    </div>
-  );
+	return (
+		<div>
+			<Container>
+				<Row className="justify-content-center">
+					<Col xs={6}>
+						<Container>
+							<Row className="d-flex justify-content-center">
+								<Col xs={3}>
+									<h1>
+										<Badge bg="info" className="justify-content-around">
+											Sign up
+										</Badge>
+									</h1>
+								</Col>
+							</Row>
+						</Container>
+						<Card>
+							<Card.Body>
+								<Form onSubmit={handleFormSubmit}>
+									<Form.Label>First Name</Form.Label>
+									<Form.Control
+										type="text"
+										placeholder="First Name"
+										name="firstName"
+										id="firstName"
+										onChange={handleChange}
+									/>
+									<Form.Label>Last Name</Form.Label>
+									<Form.Control
+										type="text"
+										placeholder="Last Name"
+										name="lastName"
+										id="lastName"
+										onChange={handleChange}
+									/>{" "}
+									<Form.Group className="mb-3">
+										<Form.Label>Email address</Form.Label>
+										<Form.Control
+											type="email"
+											placeholder="youremail@test.com"
+											name="email"
+											id="email"
+											onChange={handleChange}
+										/>
+									</Form.Group>
+									<Form.Group className="mb-3">
+										<Form.Label>Password</Form.Label>
+										<Form.Control
+											placeholder="Password"
+											name="password"
+											type="password"
+											id="pwd"
+											onChange={handleChange}
+										/>
+									</Form.Group>
+									<Stack gap={2} className="col-md-5 mx-auto">
+										<Button variant="outline-primary" type="submit">
+											Sign up
+										</Button>
+										<Button
+											onClick={() => navigate("/login")}
+											variant="outline-success"
+											type="button"
+										>
+											Log in
+										</Button>
+									</Stack>
+								</Form>
+							</Card.Body>
+						</Card>
+					</Col>
+				</Row>
+			</Container>
+		</div>
+	);
 }
 
 export default Signup;
