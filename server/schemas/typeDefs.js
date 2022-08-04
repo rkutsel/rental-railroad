@@ -1,34 +1,64 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
+
+  type Address {
+    _id: ID
+    city: String
+    state: String
+    street: String
+    houseNum: String
+  }
+ 
   type Category {
     _id: ID
     name: String
+  }
+
+  type Comment: Comment {
+    _id: ID
+    author: String
+    comment: String
+    createdAt: String
   }
 
   type Product {
     _id: ID
     name: String
     description: String
+    isRented: Boolean
     image: String
-    quantity: Int
-    price: Float
+    pricePerDay: Int
     category: Category
+    comments: Comment
   }
 
   type Order {
     _id: ID
-    purchaseDate: String
-    products: [Product]
+    OrderDate: String
+    rentalStartDate: String
+    rentalEndDate: String
+    rentedProduct: Product
+    rentedUser: User
+    cost: Number
   }
 
   type User {
     _id: ID
-    firstName: String
-    lastName: String
+    username: String
+    name: String
     email: String
+    password: String
+    aboutMe: String
+    rentals: [Product]
+    wishlist: [Product]
+    isLender: Boolean
+    isBorrower: Boolean
     orders: [Order]
+    addresses: [Address]
   }
+
+
 
   type Checkout {
     session: ID
