@@ -1,20 +1,40 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
 const orderSchema = new Schema({
-  purchaseDate: {
+  OrderDate: {
     type: Date,
-    default: Date.now
+    get: (date) => {
+      if (date) return date.toLocaleString().split("T")[0];
+    },
+    default: Date.now,
   },
-  products: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Product'
-    }
-  ]
+  rentalStartDate: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
+  rentalEndDate: {
+    type: Date,
+    required: true,
+  },
+  rentedProduct: {
+    type: Schema.Types.ObjectId,
+    ref: "Product",
+    required: true,
+  },
+  rentedUser: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  cost: {
+    type: Number,
+    required: true,
+  },
 });
 
-const Order = mongoose.model('Order', orderSchema);
+const Order = mongoose.model("Order", orderSchema);
 
 module.exports = Order;
