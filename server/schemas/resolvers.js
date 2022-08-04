@@ -34,8 +34,8 @@ const resolvers = {
     user: async (parent, args, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id)
-                              .populate({path: "myRentals", select: ["title", "image", "isRented", "pricePerDay"]})
-                              .populate({path: "myWishList", select:["title", "image", "isRented", "pricePerDay"]})
+                              .populate({path: "rentals", select: ["title", "image", "isRented", "pricePerDay"]})
+                              .populate({path: "wishlist", select:["title", "image", "isRented", "pricePerDay"]})
                               .populate("myOrders");
 
         user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
@@ -118,7 +118,7 @@ const resolvers = {
       console.log(context);
       if (context.user) {
 
-        await User.findByIdAndUpdate(context.user._id, { $push: { myRentals : productId } },{new: true});
+        await User.findByIdAndUpdate(context.user._id, { $push: { rentals : productId } },{new: true});
         
         return user;
       }
@@ -130,7 +130,7 @@ const resolvers = {
       console.log(context);
       if (context.user) {
 
-        await User.findByIdAndUpdate(context.user._id, { $push: { myWishlist : productId } }, {new: true});
+        await User.findByIdAndUpdate(context.user._id, { $push: { wishlist : productId } }, {new: true});
         
         return user;
       }
