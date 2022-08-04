@@ -107,4 +107,4 @@ dist
 .DS_Store
 
 # build
-client/build
+build/*
