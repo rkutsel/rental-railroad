@@ -4,11 +4,14 @@ const { Schema } = mongoose;
 
 const commentSchema = new Schema(
   {
+<<<<<<< HEAD
     productId: {
       type: Schema.Types.ObjectId,
       ref: "Product",
       required: true,
     },
+=======
+>>>>>>> develop
     author: {
       type: String,
       required: true,
