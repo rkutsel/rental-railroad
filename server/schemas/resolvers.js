@@ -153,20 +153,21 @@ const resolvers = {
     // Function to update product 
     updateProduct: async(parent, { _id, pricePerDay }, context) => { 
       if (context.user) {
-        return await Product.findByOneAndUpdate({_id: product._id}, {pricePerDay: pricePerDay}, { new: true });
+        return await Product.findByIdAndUpdate((_id), {pricePerDay: pricePerDay}, { new: true });
       }
       throw new AuthenticationError("Not logged in");
     },
     
     addCommentToProduct: async(parent, {productId, comment}, context) => {
       if (context.user) {
-        return await Product.findByOneAndUpdate( {_id: productId},          
+        return await Product.findByIdAndUpdate( 
+          (productId),          
           {
           $addToSet: {
-            comments: { comment, author: context.user.firstName },
+            comments: { comment: comment, author: context.user.firstName },
           },
-        }
-        ,{new: true});
+        },
+        {new: true});
       }
       throw new AuthenticationError("Not logged in");
     },
