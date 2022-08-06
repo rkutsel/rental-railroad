@@ -2,20 +2,22 @@ import React from "react";
 import Auth from "../../utils/auth";
 import { Link } from "react-router-dom";
 import "./index.css";
-
-// import Container from "react-bootstrap/esm/Container";
-// import Nav from "react-bootstrap/esm/Nav";
-// import Navbar from "react-bootstrap/esm/Navbar";
-// import NavDropdown from "react-bootstrap/esm/NavDropdown";
-
-import { Container, Nav, Navbar, NavDropdown, Stack } from "react-bootstrap";
+import {
+  Container,
+  Nav,
+  Navbar,
+  NavDropdown,
+  Stack,
+  Image,
+} from "react-bootstrap";
+import Logo from "../../assets/TL2.png";
 
 function Navigation() {
   return (
     <Navbar className="Navbar" variant="dark" expand="lg" sticky="top">
       <Container className="ms-auto">
         <Navbar.Brand as={Link} to="/">
-          Rental Railroad!
+          <Image className="Logo" src={Logo} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

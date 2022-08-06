@@ -1,7 +1,11 @@
 .Navbar {
-    background: #009ad4;
+  background: #009ad4;
 }
 
 .Container {
-    display: grid;
+  display: grid;
+}
+
+.Logo {
+  width: 25%;
 }
