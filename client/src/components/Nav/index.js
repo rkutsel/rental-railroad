@@ -2,6 +2,7 @@ import React from "react";
 import Auth from "../../utils/auth";
 import { Link } from "react-router-dom";
 import "./index.css";
+import CategoryMenu from "../CategoryMenu";
 import {
   Container,
   Nav,
@@ -27,7 +28,7 @@ function Navigation() {
                 <Navbar.Brand className="p-2 d-flex hover" as={Link} to="/">
                   Home
                 </Navbar.Brand>
-                <NavDropdown
+                {/* <NavDropdown
                   className="p-2 hover"
                   title="Category"
                   id="collapsible-nav-dropdown"
@@ -44,7 +45,8 @@ function Navigation() {
                   <NavDropdown.Item as={Link} to="/">
                     Raji
                   </NavDropdown.Item>
-                </NavDropdown>
+                </NavDropdown> */}
+                <CategoryMenu />
                 <Navbar.Brand className="p-2 hover" as={Link} to="/profile">
                   Profile
                 </Navbar.Brand>
