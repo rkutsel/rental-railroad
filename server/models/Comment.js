@@ -4,10 +4,6 @@ const { Schema } = mongoose;
 
 const commentSchema = new Schema(
   {
-    productId: {
-      type: String,
-      required: true,
-    },
     author: {
       type: String,
       required: true,
