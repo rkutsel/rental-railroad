@@ -1,7 +1,21 @@
 .Navbar {
-    background: #009ad4;
+  background: #009ad4;
 }
 
 .Container {
-    display: grid;
+  display: grid;
+}
+
+.Brand {
+  width: 20%;
+}
+.Logo {
+  max-width: 100%;
+  margin: 10px;
+}
+
+.hover:hover {
+  text-shadow: 0 0 4px black;
+  transform: scale(1.05);
+  transition: 0.3s;
 }
