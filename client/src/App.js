@@ -13,7 +13,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Detail from "./pages/Detail";
 import Profile from "./pages/Profile";
-import Nav from "./components/Nav";
+import Navigation from "./components/Nav";
 import { StoreProvider } from "./utils/GlobalState";
 
 // Do we want a 404 page v
