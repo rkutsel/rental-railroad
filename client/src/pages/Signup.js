@@ -3,6 +3,7 @@ import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import Auth from "../utils/auth";
 import { ADD_USER } from "../utils/mutations";
+
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
@@ -38,12 +39,11 @@ function Signup(props) {
 		});
 	};
 	const navigate = useNavigate();
-
 	return (
 		<div>
 			<Container>
 				<Row className="justify-content-center">
-					<Col xs={6}>
+					<Col xs={7}>
 						<Container>
 							<Row className="d-flex justify-content-center">
 								<Col xs={3}>
@@ -78,7 +78,7 @@ function Signup(props) {
 										<Form.Label>Email address</Form.Label>
 										<Form.Control
 											type="email"
-											placeholder="youremail@test.com"
+											placeholder="youremail@gmail.com"
 											name="email"
 											id="email"
 											onChange={handleChange}
