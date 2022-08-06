@@ -50,7 +50,7 @@ function App() {
 							<Route path="/login" element={<Login />} />
 							<Route path="/signup" element={<Signup />} />
 							<Route path="/products/:id" element={<Detail />} />
-							<Route path="/profiles/:id" element={<Profile />} />
+							<Route path="/profile" element={<Profile />} />
 							<Route path="*" element={<NoMatch />} />
 						</Routes>
 					</StoreProvider>
