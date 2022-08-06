@@ -1,13 +1,8 @@
-const mongoose = require("mongoose");
+const { Schema } = require("mongoose");
 
-const { Schema } = mongoose;
-
+// This is a subdocument schema, it won't become its own model but we'll use it as the schema for the product comments
 const commentSchema = new Schema(
   {
-    productId: {
-      type: String,
-      required: true,
-    },
     author: {
       type: String,
       required: true,
@@ -37,6 +32,4 @@ const commentSchema = new Schema(
   }
 );
 
-const Comment = mongoose.model("Comment", commentSchema);
-
-module.exports = Comment;
+module.exports = commentSchema;

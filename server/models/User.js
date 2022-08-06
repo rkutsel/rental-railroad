@@ -2,16 +2,19 @@ const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 const bcrypt = require("bcrypt");
-const orderSchema = require("./Order");
 const addressSchema = require("./Address");
 
 const userSchema = new Schema(
   {
-    username: {
+    firstName: {
       type: String,
       required: true,
       unique: true,
       trim: true,
+    },
+    lastName: {
+      type: String,
+      required: false,
     },
     email: {
       type: String,
@@ -22,10 +25,6 @@ const userSchema = new Schema(
       type: String,
       required: true,
       minlength: 8,
-    },
-    name: {
-      type: String,
-      required: false,
     },
     aboutMe: {
       type: String,
@@ -46,12 +45,19 @@ const userSchema = new Schema(
     isLender: {
       type: Boolean,
       required: true,
+      default: false,
     },
     isBorrower: {
       type: Boolean,
       required: true,
+      default: true,
     },
-    orders: [orderSchema],
+    orders: [
+      {
+      type: Schema.Types.ObjectId,
+      ref: "Order",
+      },
+    ],
     addresses: [addressSchema],
   },
   {
