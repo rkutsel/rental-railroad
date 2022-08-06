@@ -34,9 +34,7 @@ const productSchema = new Schema(
       ref: "Category",
       required: true,
     },
-    comments: {
-      type: [commentSchema],
-    },
+    comments: [commentSchema],
   },
   {
     toJSON: {
