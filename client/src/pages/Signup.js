@@ -66,7 +66,7 @@ function Signup(props) {
 										<Form.Label>Email address</Form.Label>
 										<Form.Control
 											type="email"
-											placeholder="youremail@test.com"
+											placeholder="youremail@gmail.com"
 											name="email"
 											id="email"
 											onChange={handleChange}
