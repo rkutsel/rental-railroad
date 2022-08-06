@@ -1,11 +1,15 @@
-import React, { useEffect } from 'react';
-import ProductItem from '../ProductItem';
-import { useStoreContext } from '../../utils/GlobalState';
-import { UPDATE_PRODUCTS } from '../../utils/actions';
-import { useQuery } from '@apollo/client';
-import { QUERY_PRODUCTS } from '../../utils/queries';
-import { idbPromise } from '../../utils/helpers';
-import spinner from '../../assets/spinner.gif';
+import React, { useEffect } from "react";
+import ProductItem from "../ProductItem";
+import { useStoreContext } from "../../utils/GlobalState";
+import { UPDATE_PRODUCTS } from "../../utils/actions";
+import { useQuery } from "@apollo/client";
+import { QUERY_PRODUCTS } from "../../utils/queries";
+import { idbPromise } from "../../utils/helpers";
+import spinner from "../../assets/spinner.gif";
+
+// Bootstrap components
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 function ProductList() {
   const [state, dispatch] = useStoreContext();
@@ -21,10 +25,10 @@ function ProductList() {
         products: data.products,
       });
       data.products.forEach((product) => {
-        idbPromise('products', 'put', product);
+        idbPromise("products", "put", product);
       });
     } else if (!loading) {
-      idbPromise('products', 'get').then((products) => {
+      idbPromise("products", "get").then((products) => {
         dispatch({
           type: UPDATE_PRODUCTS,
           products: products,
@@ -43,27 +47,40 @@ function ProductList() {
     );
   }
 
+  function returnColor(id) {
+    if (id % 3 === 0) {
+      return "pink";
+    } else if (id % 2 === 0) {
+      return "orange";
+    } else {
+      return "purple";
+    }
+  }
+
   return (
-    <div className="my-2">
-      <h2>Our Products:</h2>
+    <>
       {state.products.length ? (
-        <div className="flex-row">
-          {filterProducts().map((product) => (
-            <ProductItem
-              key={product._id}
-              _id={product._id}
-              image={product.image}
-              name={product.name}
-              price={product.price}
-              quantity={product.quantity}
-            />
-          ))}
+        <div className="cards d-flex">
+          <Row xs={1} md={3} className="g-4">
+            {filterProducts().map((product) => (
+              <Col key={product._id}>
+                <ProductItem
+                  color={returnColor(product._id)}
+                  _id={product._id}
+                  image={product.image}
+                  name={product.name}
+                  price={product.pricePerDay}
+                  description={product.description}
+                />
+              </Col>
+            ))}
+          </Row>
         </div>
       ) : (
-        <h3>You haven't added any products yet!</h3>
+        <h3>No products to rent!</h3>
       )}
       {loading ? <img src={spinner} alt="loading" /> : null}
-    </div>
+    </>
   );
 }
 
