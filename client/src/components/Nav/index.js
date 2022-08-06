@@ -15,7 +15,7 @@ function Navigation() {
     <Navbar className="Navbar" variant="dark" expand="lg" sticky="top">
       <Container className="ms-auto">
         <Navbar.Brand as={Link} to="/">
-              Rental Railroad!
+          Rental Railroad!
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
@@ -24,7 +24,11 @@ function Navigation() {
               <Navbar.Brand className="p-2" as={Link} to="/">
                 Home
               </Navbar.Brand>
-              <NavDropdown className="p-2" title="Category" id="collapsible-nav-dropdown">
+              <NavDropdown
+                className="p-2"
+                title="Category"
+                id="collapsible-nav-dropdown"
+              >
                 <NavDropdown.Item as={Link} to="/">
                   Roman
                 </NavDropdown.Item>
