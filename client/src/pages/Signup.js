@@ -39,7 +39,6 @@ function Signup(props) {
 		});
 	};
 	const navigate = useNavigate();
-
 	return (
 		<div>
 			<Container>

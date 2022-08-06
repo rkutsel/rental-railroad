@@ -1,7 +1,6 @@
-const mongoose = require("mongoose");
+const { Schema } = require('mongoose');
 
-const { Schema } = mongoose;
-
+// This is a subdocument schema, it won't become its own model but we'll use it as the schema for the User's address
 const addressSchema = new Schema(
   {
     city: {
@@ -30,6 +29,5 @@ const addressSchema = new Schema(
   }
 );
 
-const Address = mongoose.model("Address", addressSchema);
 
-module.exports = Address;
+module.exports = addressSchema;
