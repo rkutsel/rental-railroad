@@ -84,9 +84,12 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    addCategory(name: String!): Category
+
     addUser(firstName: String!, lastName:String!, email: String!, password: String!): Auth
     
-    updateUser(firstName: String,
+    updateUser(
+      firstName: String,
       lastName: String,
       email: String,
       password: String,
@@ -104,7 +107,7 @@ const typeDefs = gql`
       rentalEndDate: String!,
       rentedProduct: ID!,
       rentedUser: ID!,
-      cost: Number): Order
+      cost: Float!): Order
 
     addProduct(name: String!,
       description: String!,

@@ -1,5 +1,6 @@
 const { AuthenticationError } = require("apollo-server-express");
 const { User, Product, Category, Order } = require("../models");
+const { populate } = require("../models/User");
 const { signToken } = require("../utils/auth");
 const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
@@ -9,20 +10,20 @@ const resolvers = {
     categories: async () => {
       return await Category.find();
     },
-    products: async (parent, { category, name }) => {
+    products: async (parent, args) => {
       const params = {};
-
-      if (category) {
-        params.category = category;
+      console.log(args)
+      if (args.category) {
+        return await Product.find({category: args.category}).populate("category");
       }
 
-      if (name) {
-        params.name = {
-          $regex: name
-        };
+      if (args.name) {
+        return await Product.find({name : args.name}).populate("category");
       }
 
-      return await Product.find(params).populate("category");
+      
+      throw new AuthenticationError("Filter not Support");
+
     },
 
     product: async (parent, { _id }) => {
@@ -32,9 +33,11 @@ const resolvers = {
     user: async (parent, args, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id)
-                              .populate({path: "rentals", select: ["title", "image", "isRented", "pricePerDay"]})
-                              .populate({path: "wishlist", select:["title", "image", "isRented", "pricePerDay"]})
-                              .populate("Orders");
+                              .populate({path: "rentals", select: ["name", "image", "isRented", "pricePerDay"]})
+                              .populate({path: "wishlist", select:["name", "image", "isRented", "pricePerDay"]})
+                              .populate({path:"orders", 
+                              populate:[{path:"rentedProduct"},{path: "rentedUser"},], 
+                              select:["OrderDate","rentalStartDate","cost","rentalEndDate",],},);
 
         user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
 
@@ -45,11 +48,12 @@ const resolvers = {
     },
 
     checkout: async (parent, args, context) => {
+      console.log ("testing checkout", args)
       const url = new URL(context.headers.referer).origin;
-      const order = await Order.create(args);
+      const order = new Order(args);
       const line_items = [];
 
-      const { rentedProduct } = await order.populate("rentedProduct");
+      const { rentedProduct } = await order.populate({path:"rentedProduct", select:["name"]});
 
         const product = await stripe.products.create({
           name: rentedProduct.name,
@@ -83,6 +87,11 @@ const resolvers = {
 
   Mutation: {
 
+    addCategory: async (parent, args) => {
+      const category = await Category.create(args);
+      return(category);
+    },
+
     addUser: async (parent, args) => {
       const user = await User.create(args);
       const token = signToken(user);
@@ -93,12 +102,10 @@ const resolvers = {
     addToMyWishlist: async (parent, { productId }, context) => {
       console.log(context);
       if (context.user) {
-        await User.findByIdAndUpdate(
+        return await User.findByIdAndUpdate(
           {_id: context.user._id}, 
           { $addToSet: { wishlist : productId } },
           {new: true});
-  
-        return user;
       }
 
       throw new AuthenticationError("Not logged in");
@@ -119,7 +126,7 @@ const resolvers = {
 
       await User.findByIdAndUpdate(
         {_id:context.user._id}, 
-        { $addToSet: { myOrders: orderId } },
+        { $addToSet: { orders: order._id} },
          {new: true});
 
       return { User };
@@ -129,16 +136,16 @@ const resolvers = {
     },
 
     // Function to create product 
-    addProduct: async (parent, {product}, context) => {
+    addProduct: async (parent, args, context) => {
       if (context.user) {
-      const addedProduct = await Product.create(product);
+      const addedProduct = await Product.create(args);
      
-      await User.findByIdAndUpdate(
+      return await User.findByIdAndUpdate(
         {_id: context.user._id}, 
         { $addToSet: { rentals : addedProduct._id } },
         {new: true});
      
-      return { User };
+   
       }
       throw new AuthenticationError("Not logged in");
     },

@@ -45,10 +45,12 @@ const userSchema = new Schema(
     isLender: {
       type: Boolean,
       required: true,
+      default: false,
     },
     isBorrower: {
       type: Boolean,
       required: true,
+      default: true,
     },
     orders: [
       {
