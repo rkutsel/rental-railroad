@@ -10,13 +10,13 @@ import {
   Stack,
   Image,
 } from "react-bootstrap";
-import Logo from "../../assets/TL2.png";
+import Logo from "../../assets/Logo.png";
 
 function Navigation() {
   return (
     <Navbar className="Navbar" variant="dark" expand="lg" sticky="top">
-      <Container className="ms-auto">
-        <Navbar.Brand as={Link} to="/">
+      <Container className="d-flex justify-content-between" expand="lg">
+        <Navbar.Brand className="Brand" as={Link} to="/">
           <Image className="Logo" src={Logo} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />

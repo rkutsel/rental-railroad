@@ -6,6 +6,10 @@
   display: grid;
 }
 
+.Brand {
+  width: 20%;
+}
 .Logo {
-  width: 25%;
+  max-width: 100%;
+  margin: 10px;
 }
