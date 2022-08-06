@@ -15,7 +15,7 @@ const typeDefs = gql`
     name: String
   }
 
-  type Comment: Comment {
+  type Comment {
     _id: ID
     author: String
     comment: String
@@ -40,13 +40,13 @@ const typeDefs = gql`
     rentalEndDate: String
     rentedProduct: Product
     rentedUser: User
-    cost: Number
+    cost: Float
   }
 
   type User {
     _id: ID
-    username: String
-    name: String
+    firstName: String
+    lastName: String
     email: String
     password: String
     aboutMe: String
@@ -57,7 +57,6 @@ const typeDefs = gql`
     orders: [Order]
     addresses: [Address]
   }
-
 
 
   type Checkout {
@@ -74,16 +73,51 @@ const typeDefs = gql`
     products(category: ID, name: String): [Product]
     product(_id: ID!): Product
     user: User
-    order(_id: ID!): Order
-    checkout(products: [ID]!): Checkout
+    
+    checkout( 
+      OrderDate: String!,
+      rentalStartDate: String!,
+      rentalEndDate: String!,
+      rentedProduct: ID!,
+      rentedUser: ID,
+      cost: Float!): Checkout
   }
 
   type Mutation {
-    addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
-    addOrder(products: [ID]!): Order
-    updateUser(firstName: String, lastName: String, email: String, password: String): User
-    updateProduct(_id: ID!, quantity: Int!): Product
+    addUser(firstName: String!, lastName:String!, email: String!, password: String!): Auth
+    
+    updateUser(firstName: String,
+      lastName: String,
+      email: String,
+      password: String,
+      aboutMe: String,
+      isLender: Boolean,
+      isBorrower: Boolean
+    ): User
+
     login(email: String!, password: String!): Auth
+    
+    addToMyWishlist(productId: ID!): User
+    
+    addOrder(OrderDate: String!,
+      rentalStartDate: String!,
+      rentalEndDate: String!,
+      rentedProduct: ID!,
+      rentedUser: ID!,
+      cost: Number): Order
+
+    addProduct(name: String!,
+      description: String!,
+      isRented: Boolean!,
+      image: String!,
+      pricePerDay: Float!,
+      category: ID!): Product
+
+    updateProduct(_id: ID!, pricePerDay: Int!, ): Product
+  
+    addCommentToProduct(productId: ID!, comment: String!): Product
+
+
   }
 `;
 

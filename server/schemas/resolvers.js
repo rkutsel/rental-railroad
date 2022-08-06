@@ -9,8 +9,6 @@ const resolvers = {
     categories: async () => {
       return await Category.find();
     },
-
-
     products: async (parent, { category, name }) => {
       const params = {};
 
@@ -36,7 +34,7 @@ const resolvers = {
         const user = await User.findById(context.user._id)
                               .populate({path: "rentals", select: ["title", "image", "isRented", "pricePerDay"]})
                               .populate({path: "wishlist", select:["title", "image", "isRented", "pricePerDay"]})
-                              .populate("myOrders");
+                              .populate("Orders");
 
         user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
 
@@ -46,19 +44,9 @@ const resolvers = {
       throw new AuthenticationError("Not logged in");
     },
 
-    order: async (parent, { _id }, context) => {
-      if (context.user) {
-        const user = await User.findById(context.user._id).populate("product");
-
-        return user.orders.id(_id);
-      }
-
-      throw new AuthenticationError("Not logged in");
-    },
-
     checkout: async (parent, args, context) => {
       const url = new URL(context.headers.referer).origin;
-      const order = new Order({ products: args.product});
+      const order = await Order.create(args);
       const line_items = [];
 
       const { rentedProduct } = await order.populate("rentedProduct");
@@ -102,36 +90,14 @@ const resolvers = {
       return { token, user };
     },
 
-    addToMyOrders: async (parent, { orderId }, context) => {
-      console.log(context);
-      if (context.user) {
-
-        await User.findByIdAndUpdate(context.user._id, { $push: { myOrders: orderId } }, {new: true});
-
-        return user;
-      }
-
-      throw new AuthenticationError("Not logged in");
-    },
-    
-    addToMyRentals: async (parent, { productId }, context) => {
-      console.log(context);
-      if (context.user) {
-
-        await User.findByIdAndUpdate(context.user._id, { $push: { rentals : productId } },{new: true});
-        
-        return user;
-      }
-
-      throw new AuthenticationError("Not logged in");
-    },
-
     addToMyWishlist: async (parent, { productId }, context) => {
       console.log(context);
       if (context.user) {
-
-        await User.findByIdAndUpdate(context.user._id, { $push: { wishlist : productId } }, {new: true});
-        
+        await User.findByIdAndUpdate(
+          {_id: context.user._id}, 
+          { $addToSet: { wishlist : productId } },
+          {new: true});
+  
         return user;
       }
 
@@ -150,9 +116,15 @@ const resolvers = {
     addOrder: async (parent, args, context) => {
       if (context.user) {
       const order = await Order.create(args);
-      return { order };
-      }
 
+      await User.findByIdAndUpdate(
+        {_id:context.user._id}, 
+        { $addToSet: { myOrders: orderId } },
+         {new: true});
+
+      return { User };
+      }
+      
       throw new AuthenticationError("Not logged in");
     },
 
@@ -160,22 +132,34 @@ const resolvers = {
     addProduct: async (parent, {product}, context) => {
       if (context.user) {
       const addedProduct = await Product.create(product);
-      return { addedProduct };
+     
+      await User.findByIdAndUpdate(
+        {_id: context.user._id}, 
+        { $addToSet: { rentals : addedProduct._id } },
+        {new: true});
+     
+      return { User };
       }
       throw new AuthenticationError("Not logged in");
     },
 
     // Function to update product 
-    updateProduct: (parent, {product}, context) => { 
+    updateProduct: (parent, { _id, pricePerDay }, context) => { 
       if (context.user) {
-        return await Product.findByOneAndUpdate({_id: product._id}, product, { new: true });
+        return await Product.findByOneAndUpdate({_id: product._id}, {pricePerDay: pricePerDay}, { new: true });
       }
       throw new AuthenticationError("Not logged in");
     },
     
     addCommentToProduct: (parent, {productId, comment}, context) => {
       if (context.user) {
-        return await Product.findByOneAndUpdate( {_id: productId}, { $push: { comments : comment } },{new: true});
+        return await Product.findByOneAndUpdate( {_id: productId},          
+          {
+          $addToSet: {
+            comments: { comment, author: context.user.firstName },
+          },
+        }
+        ,{new: true});
       }
       throw new AuthenticationError("Not logged in");
     },
