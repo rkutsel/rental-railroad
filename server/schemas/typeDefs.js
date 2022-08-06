@@ -30,7 +30,7 @@ const typeDefs = gql`
     image: String
     pricePerDay: Int
     category: Category
-    comments: Comment
+    comments: [Comment]
   }
 
   type Order {
