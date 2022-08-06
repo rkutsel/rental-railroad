@@ -1,10 +1,12 @@
 import React from "react";
+import ProfileNav from "../components/PfofileNav";
 
 const Profile = () => {
-  return (
-    <div>
-    </div>
-  );
+	return (
+		<div>
+			<ProfileNav></ProfileNav>
+		</div>
+	);
 };
 
 export default Profile;
