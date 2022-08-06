@@ -3,6 +3,8 @@ import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import Auth from "../utils/auth";
 import { ADD_USER } from "../utils/mutations";
+
+import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -43,6 +45,17 @@ function Signup(props) {
 			<Container>
 				<Row className="justify-content-center">
 					<Col xs={7}>
+						<Container>
+							<Row className="d-flex justify-content-center">
+								<Col xs={3}>
+									<h1>
+										<Badge bg="info" className="justify-content-around">
+											Sign up
+										</Badge>
+									</h1>
+								</Col>
+							</Row>
+						</Container>
 						<Card>
 							<Card.Body>
 								<Form onSubmit={handleFormSubmit}>
