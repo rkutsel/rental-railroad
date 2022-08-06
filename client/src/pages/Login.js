@@ -42,8 +42,8 @@ function Login(props) {
 	return (
 		<div>
 			<Container>
-				<Row className="d-flex justify-content-center">
-					<Col xs={6}>
+				<Row className="justify-content-center">
+					<Col xs={7}>
 						<Container>
 							<Row className="d-flex justify-content-center">
 								<Col xs={3}>
