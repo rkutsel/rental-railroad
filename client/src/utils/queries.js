@@ -79,3 +79,31 @@ export const QUERY_USER = gql`
     }
   }
 `;
+
+export const QUERY_USER_BY_ID = gql`
+  query user($userId: ID!) {
+    user(userId: $userId) {
+      _id
+      firstName
+      lastName
+      email
+      aboutMe
+      rentals {
+        _id
+        name
+        description
+        isRented
+        pricePerDay
+        image
+      }
+      wishlist {
+        _id
+        name
+        description
+        isRented
+        pricePerDay
+        image
+      }
+    }
+  }
+`;
