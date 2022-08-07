@@ -21,7 +21,11 @@ const resolvers = {
         return await Product.find({name : args.name}).populate("category");
       }
 
-      
+      if (Object.keys(args).length === 0) 
+      {
+        return await Product.find().populate("category");
+      };
+
       throw new AuthenticationError("Filter not Support");
 
     },
