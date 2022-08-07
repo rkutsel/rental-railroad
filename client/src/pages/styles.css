@@ -1,0 +1,9 @@
+:root {
+  --purple: #9227fb;
+  --spacing-one: calc(1rem * 0.5);
+  --spacing-two: calc(1rem);
+}
+
+section h1 {
+  color: var(--purple);
+}

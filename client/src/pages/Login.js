@@ -4,7 +4,7 @@ import { useMutation } from "@apollo/client";
 import { LOGIN } from "../utils/mutations";
 import Auth from "../utils/auth";
 
-import Badge from "react-bootstrap/Badge";
+import "./styles.css";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -40,18 +40,14 @@ function Login(props) {
 	const navigate = useNavigate();
 
 	return (
-		<div>
-			<Container>
+		<section>
+			<Container className="py-4">
 				<Row className="justify-content-center">
 					<Col xs={7}>
-						<Container>
+						<Container className="py-3">
 							<Row className="d-flex justify-content-center">
 								<Col xs={3}>
-									<h1>
-										<Badge bg="info" className="justify-content-around">
-											Log in
-										</Badge>
-									</h1>
+									<h1>Login</h1>
 								</Col>
 							</Row>
 						</Container>
@@ -59,10 +55,10 @@ function Login(props) {
 							<Card.Body>
 								<Form onSubmit={handleFormSubmit}>
 									<Form.Group className="mb-3">
-										<Form.Label>Email address</Form.Label>
+										<Card.Title>Email Address</Card.Title>
 										<Form.Control
 											type="email"
-											placeholder="youremail@test.com"
+											placeholder="robert@email.com"
 											name="email"
 											id="email"
 											onChange={handleChange}
@@ -70,9 +66,9 @@ function Login(props) {
 									</Form.Group>
 
 									<Form.Group className="mb-3">
-										<Form.Label>Password</Form.Label>
+										<Card.Title>Password</Card.Title>
 										<Form.Control
-											placeholder="Password"
+											placeholder="********"
 											name="password"
 											type="password"
 											id="pwd"
@@ -81,14 +77,14 @@ function Login(props) {
 									</Form.Group>
 									<Stack gap={2} className="col-md-5 mx-auto">
 										<Button variant="outline-success" type="submit">
-											Log in
+											Login
 										</Button>
 										<Button
 											onClick={() => navigate("/signup")}
 											variant="outline-primary"
 											type="button"
 										>
-											Sign up
+											Signup
 										</Button>
 									</Stack>
 								</Form>
@@ -97,7 +93,7 @@ function Login(props) {
 					</Col>
 				</Row>
 			</Container>
-		</div>
+		</section>
 	);
 }
 

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Auth from "../utils/auth";
 import { ADD_USER } from "../utils/mutations";
 
-import Badge from "react-bootstrap/Badge";
+import "./styles.css";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -45,54 +45,52 @@ function Signup(props) {
 	};
 	const navigate = useNavigate();
 	return (
-		<div>
-			<Container>
+		<section>
+			<Container className="py-4">
 				<Row className="justify-content-center">
 					<Col xs={7}>
-						<Container>
+						<Container className="py-3">
 							<Row className="d-flex justify-content-center">
-								<Col xs={3}>
-									<h1>
-										<Badge bg="info" className="justify-content-around">
-											Sign up
-										</Badge>
-									</h1>
+								<Col xs={4}>
+									<h1>Signup</h1>
 								</Col>
 							</Row>
 						</Container>
 						<Card>
 							<Card.Body>
 								<Form onSubmit={handleFormSubmit}>
-									<Form.Label>First Name</Form.Label>
+									<Card.Title>First Name</Card.Title>
 									<Form.Control
 										type="text"
-										placeholder="First Name"
+										placeholder="Robert"
 										name="firstName"
 										id="firstName"
 										onChange={handleChange}
+										className="mb-2"
 									/>
-									<Form.Label>Last Name</Form.Label>
+									<Card.Title>Last Name</Card.Title>
 									<Form.Control
 										type="text"
-										placeholder="Last Name"
+										placeholder="Williams"
 										name="lastName"
 										id="lastName"
 										onChange={handleChange}
-									/>{" "}
-									<Form.Group className="mb-3">
-										<Form.Label>Email address</Form.Label>
+										className="mb-2"
+									/>
+									<Form.Group className="mb-2">
+										<Card.Title>Email Address</Card.Title>
 										<Form.Control
 											type="email"
-											placeholder="youremail@gmail.com"
+											placeholder="robert@mail.com"
 											name="email"
 											id="email"
 											onChange={handleChange}
 										/>
 									</Form.Group>
 									<Form.Group className="mb-3">
-										<Form.Label>Password</Form.Label>
+										<Card.Title>Password</Card.Title>
 										<Form.Control
-											placeholder="Password"
+											placeholder="********"
 											name="password"
 											type="password"
 											id="pwd"
@@ -101,14 +99,14 @@ function Signup(props) {
 									</Form.Group>
 									<Stack gap={2} className="col-md-5 mx-auto">
 										<Button variant="outline-primary" type="submit">
-											Sign up
+											Signup
 										</Button>
 										<Button
 											onClick={() => navigate("/login")}
 											variant="outline-success"
 											type="button"
 										>
-											Log in
+											Login
 										</Button>
 									</Stack>
 								</Form>
@@ -117,7 +115,7 @@ function Signup(props) {
 					</Col>
 				</Row>
 			</Container>
-		</div>
+		</section>
 	);
 }
 
