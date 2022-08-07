@@ -22,11 +22,25 @@ export const QUERY_ALL_PRODUCTS = gql`
       _id
       name
       description
-      pricePerDay
       isRented
+      pricePerDay
+      image
       category {
         name
       }
+    }
+  }
+`;
+
+export const QUERY_SINGLE_PRODUCT = gql`
+  query singleProduct($productId: ID!) {
+    product(productId: $productId) {
+      _id
+      name
+      description
+      isRented
+      pricePerDay
+      image
     }
   }
 `;
@@ -45,16 +59,21 @@ export const QUERY_USER = gql`
     user {
       firstName
       lastName
+      email
+      aboutMe
+      isLender
+      isBorrower
       orders {
         _id
-        purchaseDate
-        products {
+        OrderDate
+        rentedProduct {
           _id
           name
-          description
-          price
-          quantity
-          image
+          pricePerDay
+        }
+        rentedUser {
+          firstName
+          lastName
         }
       }
     }
