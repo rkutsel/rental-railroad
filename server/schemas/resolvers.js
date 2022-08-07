@@ -37,8 +37,20 @@ const resolvers = {
     },
 
     user: async (parent, args, context) => {
-      if (context.user) {
+      if (Object.keys(args).length === 0 && context.user) {
         const user = await User.findById(context.user._id)
+                              .populate({path: "rentals", select: ["name", "image", "isRented", "pricePerDay"]})
+                              .populate({path: "wishlist", select:["name", "image", "isRented", "pricePerDay"]})
+                              .populate({path:"orders", 
+                              populate:[{path:"rentedProduct"},{path: "rentedUser"},], 
+                              select:["OrderDate","rentalStartDate","cost","rentalEndDate",],},);
+
+        user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
+
+        return user;
+      }
+      else {
+        const user = await User.findById(args.userId)
                               .populate({path: "rentals", select: ["name", "image", "isRented", "pricePerDay"]})
                               .populate({path: "wishlist", select:["name", "image", "isRented", "pricePerDay"]})
                               .populate({path:"orders", 
@@ -54,7 +66,7 @@ const resolvers = {
     },
 
     checkout: async (parent, args, context) => {
-      console.log ("testing checkout", args)
+  
       const url = new URL(context.headers.referer).origin;
       const order = new Order(args);
       const line_items = [];
