@@ -47,10 +47,12 @@ function ProductList() {
     );
   }
 
-  function returnColor(id) {
-    if (id % 3 === 0) {
+  function returnColor() {
+    let num = Math.floor(Math.random() * (3 - 1 + 1) + 1);
+
+    if (num % 3 === 0) {
       return "pink";
-    } else if (id % 2 === 0) {
+    } else if (num % 2 === 0) {
       return "orange";
     } else {
       return "purple";
@@ -65,7 +67,7 @@ function ProductList() {
             {filterProducts().map((product) => (
               <Col key={product._id}>
                 <ProductItem
-                  color={returnColor(product._id)}
+                  color={returnColor()}
                   _id={product._id}
                   image={product.image}
                   name={product.name}

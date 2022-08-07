@@ -9,14 +9,21 @@ import { Component } from "react";
 
 export default class Card extends Component {
   render() {
+    let img;
+    if (this.props.image) {
+      img = <img src={"/images/" + this.props.image} alt={this.props.name} />;
+    } else {
+      img = (
+        <img
+          src="https://dash-bootstrap-components.opensource.faculty.ai/static/images/placeholder286x180.png"
+          alt=""
+        />
+      );
+    }
+
     return (
       <div className="card">
-        <Link to={`/products/${this.props._id}`}>
-          <img
-            src="https://dash-bootstrap-components.opensource.faculty.ai/static/images/placeholder286x180.png"
-            alt=""
-          />
-        </Link>
+        <Link to={`/products/${this.props._id}`}>{img}</Link>
         <div className={"card-body " + this.props.color}>
           <h2>{this.props.name}</h2>
           <p>{this.props.description}</p>
