@@ -50,9 +50,9 @@ function ProductList() {
   function returnColor() {
     let num = Math.floor(Math.random() * (3 - 1 + 1) + 1);
 
-    if (num % 3 === 0) {
+    if (num === 3) {
       return "pink";
-    } else if (num % 2 === 0) {
+    } else if (num === 2) {
       return "orange";
     } else {
       return "purple";
