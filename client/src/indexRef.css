@@ -79,8 +79,8 @@ a:hover {
   text-decoration: underline;
 } */
 
-header {
-  background: var(--primary);
+section h3 {
+  background: var(--purple);
 }
 
 header a {
