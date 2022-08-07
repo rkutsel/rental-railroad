@@ -21,8 +21,20 @@ export default class Card extends Component {
       );
     }
 
+    let overlay;
+    if (this.props.isRented) {
+      overlay = (
+        <div class="overlay-div d-flex justify-content-center align-items-center">
+          <h1>Rented</h1>
+        </div>
+      );
+    } else {
+      overlay = null;
+    }
+
     return (
       <div className="Card">
+        {overlay}
         <Link to={`/products/${this.props._id}`}>{img}</Link>
         <div className={"Card-body " + this.props.color}>
           <div className="d-flex justify-content-between">
