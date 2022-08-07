@@ -50,7 +50,7 @@ const resolvers = {
         return user;
       }
       else {
-        const user = await User.findById(args.userid)
+        const user = await User.findById(args.userId)
                               .populate({path: "rentals", select: ["name", "image", "isRented", "pricePerDay"]})
                               .populate({path: "wishlist", select:["name", "image", "isRented", "pricePerDay"]})
                               .populate({path:"orders", 
