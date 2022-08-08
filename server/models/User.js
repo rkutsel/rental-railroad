@@ -54,8 +54,8 @@ const userSchema = new Schema(
     },
     orders: [
       {
-      type: Schema.Types.ObjectId,
-      ref: "Order",
+        type: Schema.Types.ObjectId,
+        ref: "Order",
       },
     ],
     addresses: [addressSchema],
@@ -67,6 +67,14 @@ const userSchema = new Schema(
     id: false,
   }
 );
+
+// Create a virtual property `commentCount` that gets the amount of comments per user
+userSchema
+  .virtual("fullName")
+  // Getter
+  .get(function () {
+    return `${this.firstName} ${this.lastName}`;
+  });
 
 // set up pre-save middleware to create password
 userSchema.pre("save", async function (next) {
