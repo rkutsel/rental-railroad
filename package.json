@@ -16,8 +16,5 @@
   "devDependencies": {
     "concurrently": "^5.1.0",
     "prettier": "2.7.1"
-  },
-  "dependencies": {
-    "react-bootstrap-table-next": "^4.0.3"
   }
 }
