@@ -18,6 +18,8 @@ function ProductList() {
 
   const { loading, data } = useQuery(QUERY_PRODUCTS);
 
+  console.log(state);
+  
   useEffect(() => {
     if (data) {
       dispatch({
