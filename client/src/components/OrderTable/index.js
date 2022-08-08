@@ -1,17 +1,24 @@
 import React from "react";
 import { useQuery } from '@apollo/client';
-import { QUERY_USER } from "../../utils/queries";
+import { QUERY_ME } from '../../utils/queries';
 import Table from 'react-bootstrap/Table';
+import spinner from "../../assets/spinner.gif";
 
+
+function getDate(inputDate) {
+    const [date,time] = inputDate.split(",");
+    return date;
+};
 
 function OrderTable() {
 
-    const { loading, data } = useQuery(QUERY_USER);
-    const userprofile = data?.user|| {};
-    const userOrders = userprofile.orders;
-
+    const { loading, data } = useQuery(QUERY_ME);
+    const userOrders = data?.me.orders || {};
+    
         return (
-          <Table striped>
+        <>
+        { userOrders.length? (
+        <Table striped>
             <thead> 
                 <tr>
                     <th>Order Date</th>
@@ -24,17 +31,23 @@ function OrderTable() {
             <tbody>
               {userOrders.map((order) => (
                 <tr key={order._id}>
-                  <td>{order.orderDate}</td>
+                  <td>{getDate(order.OrderDate)}</td>
                   <td>{order.rentedProduct.name}</td>
-                  <td>{order.orderStartDate}</td>
-                  <td>{order.orderEndDate}</td>
+                  <td>{getDate(order.rentalStartDate)}</td>
+                  <td>{getDate(order.rentalEndDate)}</td>
                   <td>{order.cost}</td>
                 </tr>
               ))}
             </tbody>
-          </Table>
+          </Table>) : (
+            <h3 className="d-flex align-items-center justify-content-center m-5">
+              No products to rent!
+           </h3>
+          )
+          }      
+          {loading ? <img src={spinner} alt="loading" /> : null} 
+        </>
         );
-
 }
     
 export default OrderTable;

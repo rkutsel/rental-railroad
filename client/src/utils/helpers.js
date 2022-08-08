@@ -54,3 +54,24 @@ export function idbPromise(storeName, method, object) {
     };
   });
 }
+
+
+// function to convert unix timestamp to US date and Time
+export function unixTStoUSTS(inputDate, type) {
+
+  var milliseconds = inputDate * 1000;
+
+  const dateObject = new Date(milliseconds)
+
+  if (type === "date") {
+    console.log (dateObject.toLocaleDateString())
+    return(dateObject.toLocaleString());
+  } 
+  else if (type == "datetime") {
+    return(dateObject.toLocaleString())
+  } 
+  else {
+    return ('Unsupported type');
+  }
+
+}

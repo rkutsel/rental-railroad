@@ -12,11 +12,17 @@ const orderSchema = new Schema({
   },
   rentalStartDate: {
     type: Date,
+    get: (date) => {
+      if (date) return date.toLocaleString().split("T")[0];
+    },
     required: true,
     default: Date.now,
   },
   rentalEndDate: {
     type: Date,
+    get: (date) => {
+      if (date) return date.toLocaleString().split("T")[0];
+    },
     required: true,
   },
   rentedProduct: {
