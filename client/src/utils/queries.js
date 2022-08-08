@@ -41,6 +41,11 @@ export const QUERY_SINGLE_PRODUCT = gql`
       isRented
       pricePerDay
       image
+      comments {
+        author
+        comment
+        createdAt
+      }
     }
   }
 `;
