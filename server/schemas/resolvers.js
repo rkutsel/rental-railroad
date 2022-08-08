@@ -10,6 +10,7 @@ const resolvers = {
     categories: async () => {
       return await Category.find();
     },
+    
     products: async (parent, args) => {
       const params = {};
       console.log(args)
@@ -36,20 +37,20 @@ const resolvers = {
                       .populate("comments");
     },
 
-    user: async (parent, args, context) => {
-      if (Object.keys(args).length === 0 && context.user) {
-        const user = await User.findById(context.user._id)
-                              .populate({path: "rentals", select: ["name", "image", "isRented", "pricePerDay"]})
-                              .populate({path: "wishlist", select:["name", "image", "isRented", "pricePerDay"]})
-                              .populate({path:"orders", 
-                              populate:[{path:"rentedProduct"},{path: "rentedUser"},], 
-                              select:["OrderDate","rentalStartDate","cost","rentalEndDate",],},);
+    me: async(parent, args, context) => {
 
-        user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
+      if (context.user) {
+          return await User.findById(context.user._id)
+                                  .populate({path: "rentals", select: ["name", "image", "isRented", "pricePerDay"]})
+                                  .populate({path: "wishlist", select:["name", "image", "isRented", "pricePerDay"]})
+                                  .populate({path:"orders", 
+                                  populate:[{path:"rentedProduct"},{path: "rentedUser"},], 
+                                  select:["OrderDate","rentalStartDate","cost","rentalEndDate",],},);
+          }
+          throw new AuthenticationError("Not logged in");
+    },
 
-        return user;
-      }
-      else {
+    user: async (parent, args, context) => {        
         const user = await User.findById(args.userId)
                               .populate({path: "rentals", select: ["name", "image", "isRented", "pricePerDay"]})
                               .populate({path: "wishlist", select:["name", "image", "isRented", "pricePerDay"]})
@@ -57,12 +58,7 @@ const resolvers = {
                               populate:[{path:"rentedProduct"},{path: "rentedUser"},], 
                               select:["OrderDate","rentalStartDate","cost","rentalEndDate",],},);
 
-        user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
-
         return user;
-      }
-
-      throw new AuthenticationError("Not logged in");
     },
 
     checkout: async (parent, args, context) => {
