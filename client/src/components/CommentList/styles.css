@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200&display=swap");
+
+body {
+  background-color: #f4f4f4 !important;
+}
+
+.commentList h3 {
+  margin-top: 2%;
+  font-family: "Manrope", sans-serif;
+  font-weight: bold;
+}
+
+.commentList .card {
+  border: none;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 40px;
+  width: 75%;
+}
+
+@media screen and (min-width: 576px) {
+  .commentList .comment {
+    width: 470px !important;
+  }
+}
