@@ -59,9 +59,9 @@ export const QUERY_CATEGORIES = gql`
   }
 `;
 
-export const QUERY_USER = gql`
-  {
-    user {
+export const QUERY_ME = gql`
+query me {
+    me {
       firstName
       lastName
       email
@@ -71,6 +71,9 @@ export const QUERY_USER = gql`
       orders {
         _id
         OrderDate
+        rentalStartDate
+        rentalEndDate
+        cost
         rentedProduct {
           _id
           name
@@ -85,7 +88,7 @@ export const QUERY_USER = gql`
   }
 `;
 
-export const QUERY_USER_BY_ID = gql`
+export const QUERY_USER = gql`
   query user($userId: ID!) {
     user(userId: $userId) {
       _id
