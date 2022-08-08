@@ -18,6 +18,13 @@ body {
   width: 75%;
 }
 
+.commentList h5 {
+  color: #5c5c5c;
+  font-size: 15px !important;
+  padding-left: 15px !important;
+  margin-bottom: 0;
+}
+
 @media screen and (min-width: 576px) {
   .commentList .comment {
     width: 470px !important;
