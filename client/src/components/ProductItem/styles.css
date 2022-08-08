@@ -12,6 +12,8 @@
 
   --lh: 1.4rem;
   line-height: var(--lh);
+
+  position: relative;
 }
 
 .Card:hover {
@@ -35,11 +37,16 @@
   transition: all ease-in 100ms;
 }
 
+.Card span {
+  font-size: 1em;
+  color: #fff;
+}
+
 .Card p {
   color: #fff;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
 }
 
@@ -52,7 +59,7 @@
 }
 
 .Card-body {
-  padding: 2.5em;
+  padding: 1em 1em 6em 1em;
 }
 
 .pink {
@@ -65,4 +72,13 @@
 
 .purple {
   background: linear-gradient(to right, #9227fb, #ad5ffc) !important;
+}
+
+.overlay-div {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-color: grey;
+  opacity: 0.7;
+  color: white;
 }

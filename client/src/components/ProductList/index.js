@@ -73,6 +73,7 @@ function ProductList() {
                   name={product.name}
                   price={product.pricePerDay}
                   description={product.description}
+                  isRented={product.isRented}
                 />
               </Col>
             ))}
