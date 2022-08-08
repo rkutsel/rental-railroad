@@ -3,6 +3,7 @@ import Auth from "../../utils/auth";
 import Nav from "react-bootstrap/Nav";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import OrderTable from "../OrderTable";
 import Container from "react-bootstrap/Container";
 
 function ProfileNav() {
@@ -27,6 +28,7 @@ function ProfileNav() {
 							</Nav.Item>
 							<Nav.Item>
 								<Nav.Link eventKey="orderhistory">Order History</Nav.Link>
+								<OrderTable/>
 							</Nav.Item>
 							<Nav.Item>
 								<Nav.Link eventKey="myinfo">My Info</Nav.Link>
