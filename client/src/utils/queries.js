@@ -17,7 +17,7 @@ export const QUERY_PRODUCTS = gql`
 `;
 
 export const QUERY_ALL_PRODUCTS = gql`
-query products {
+  query products {
     products {
       _id
       name
@@ -41,6 +41,11 @@ export const QUERY_SINGLE_PRODUCT = gql`
       isRented
       pricePerDay
       image
+      comments {
+        author
+        comment
+        createdAt
+      }
     }
   }
 `;
@@ -54,9 +59,9 @@ export const QUERY_CATEGORIES = gql`
   }
 `;
 
-export const QUERY_USER = gql`
-  {
-    user {
+export const QUERY_ME = gql`
+  query me {
+    me {
       firstName
       lastName
       email
@@ -66,6 +71,9 @@ export const QUERY_USER = gql`
       orders {
         _id
         OrderDate
+        rentalStartDate
+        rentalEndDate
+        cost
         rentedProduct {
           _id
           name
@@ -80,7 +88,7 @@ export const QUERY_USER = gql`
   }
 `;
 
-export const QUERY_USER_BY_ID = gql`
+export const QUERY_USER = gql`
   query user($userId: ID!) {
     user(userId: $userId) {
       _id
@@ -104,6 +112,16 @@ export const QUERY_USER_BY_ID = gql`
         pricePerDay
         image
       }
+    }
+  }
+`;
+
+export const QUERY_FULLNAME = gql`
+  {
+    fullname {
+      _id
+      firstName
+      lastName
     }
   }
 `;
