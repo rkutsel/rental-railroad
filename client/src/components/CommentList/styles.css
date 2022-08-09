@@ -1,7 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200&display=swap");
 
-body {
-  background-color: #f4f4f4 !important;
+.add-comment {
+  width: 75%;
+}
+
+.add-comment input {
+  border: none;
+  border-radius: 20px;
+}
+
+.add-comment button {
+  margin-left: 10px;
+  background-color: #009ad4;
+  border: none;
 }
 
 .commentList h3 {
