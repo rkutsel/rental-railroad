@@ -1,0 +1,69 @@
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { ADD_COMMENT } from "../../utils/mutations";
+import Auth from "../../utils/auth";
+
+// Styles
+import "./styles.css";
+import Button from "react-bootstrap/esm/Button";
+import Image from "react-bootstrap/Image";
+import Form from "react-bootstrap/Form";
+
+const CommentForm = ({ productId }) => {
+  const [commentText, setCommentText] = useState("");
+
+  const [addCommentToProduct] = useMutation(ADD_COMMENT);
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const { data } = await addCommentToProduct({
+        variables: {
+          productId,
+          commentText,
+          commentAuthor: Auth.getProfile().data.username,
+        },
+      });
+
+      setCommentText("");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    if (name === "commentText") {
+      setCommentText(value);
+    }
+  };
+
+  return (
+    <Form
+      onSubmit={handleFormSubmit}
+      className="add-comment d-flex flex-row mt-4 mb-4"
+    >
+      <Image
+        src="https://img.icons8.com/bubbles/100/000000/groups.png"
+        width="38"
+      />
+      <Form.Control
+        type="text"
+        className="form-control mr-3"
+        placeholder="Add your comment..."
+        value={commentText}
+        name="commentText"
+        id="commentText"
+        onChange={handleChange}
+      />
+      <Button className="btn btn-primary" type="submit">
+        Comment
+      </Button>
+    </Form>
+  );
+};
+
+export default CommentForm;
