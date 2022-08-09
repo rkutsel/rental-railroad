@@ -17,7 +17,7 @@ export const QUERY_PRODUCTS = gql`
 `;
 
 export const QUERY_ALL_PRODUCTS = gql`
-query products {
+  query products {
     products {
       _id
       name
@@ -60,7 +60,7 @@ export const QUERY_CATEGORIES = gql`
 `;
 
 export const QUERY_ME = gql`
-query me {
+  query me {
     me {
       firstName
       lastName
@@ -112,6 +112,16 @@ export const QUERY_USER = gql`
         pricePerDay
         image
       }
+    }
+  }
+`;
+
+export const QUERY_FULLNAME = gql`
+  {
+    fullname {
+      _id
+      firstName
+      lastName
     }
   }
 `;

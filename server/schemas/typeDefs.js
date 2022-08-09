@@ -1,7 +1,6 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
-
   type Address {
     _id: ID
     city: String
@@ -9,7 +8,7 @@ const typeDefs = gql`
     street: String
     houseNum: String
   }
- 
+
   type Category {
     _id: ID
     name: String
@@ -58,6 +57,11 @@ const typeDefs = gql`
     addresses: [Address]
   }
 
+  type fullName {
+    _id: ID
+    firstName: String
+    lastName: String
+  }
 
   type Checkout {
     session: ID
@@ -72,56 +76,65 @@ const typeDefs = gql`
     categories: [Category]
     products(category: ID, name: String): [Product]
     product(_id: ID!): Product
-    user(userId:ID): User
+    user(userId: ID): User
     me: User
-    
-    checkout( 
-      OrderDate: String!,
-      rentalStartDate: String!,
-      rentalEndDate: String!,
-      rentedProduct: ID!,
-      rentedUser: ID,
-      cost: Float!): Checkout
+    fullname: fullName
+
+    checkout(
+      OrderDate: String!
+      rentalStartDate: String!
+      rentalEndDate: String!
+      rentedProduct: ID!
+      rentedUser: ID
+      cost: Float!
+    ): Checkout
   }
 
   type Mutation {
     addCategory(name: String!): Category
 
-    addUser(firstName: String!, lastName:String!, email: String!, password: String!): Auth
-    
+    addUser(
+      firstName: String!
+      lastName: String!
+      email: String!
+      password: String!
+    ): Auth
+
     updateUser(
-      firstName: String,
-      lastName: String,
-      email: String,
-      password: String,
-      aboutMe: String,
-      isLender: Boolean,
+      firstName: String
+      lastName: String
+      email: String
+      password: String
+      aboutMe: String
+      isLender: Boolean
       isBorrower: Boolean
     ): User
 
     login(email: String!, password: String!): Auth
-    
+
     addToMyWishlist(productId: ID!): User
-    
-    addOrder(OrderDate: String!,
-      rentalStartDate: String!,
-      rentalEndDate: String!,
-      rentedProduct: ID!,
-      rentedUser: ID!,
-      cost: Float!): Order
 
-    addProduct(name: String!,
-      description: String!,
-      isRented: Boolean!,
-      image: String!,
-      pricePerDay: Float!,
-      category: ID!): Product
+    addOrder(
+      OrderDate: String!
+      rentalStartDate: String!
+      rentalEndDate: String!
+      rentedProduct: ID!
+      rentedUser: ID!
+      cost: Float!
+    ): Order
 
-    updateProduct(_id: ID!, pricePerDay: Int!, ): Product
-  
+    addProduct(
+      name: String!
+      description: String!
+      isRented: Boolean!
+      image: String!
+      pricePerDay: Float!
+      category: ID!
+    ): Product
+
+    updateProduct(_id: ID!, pricePerDay: Int!): Product
+
     addCommentToProduct(productId: ID!, comment: String!): Product
-
-
   }
 `;
 
