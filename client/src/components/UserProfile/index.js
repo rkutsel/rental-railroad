@@ -24,7 +24,7 @@ function UserProfileInfo(props) {
                         <Image className="border border-warning p-2" src={avatarImg} roundedCircle width={200} height={200} />
                      </Col>
                      <Col xs={12} md={6} lg={9}>
-                            <p className = "text-center px-3 m-3">AboutMe: {props.aboutMe}</p>
+                            <p className = "text-center px-3 m-3">{props.AboutMe}</p>
                      </Col>
                 </Row>
             </Container>

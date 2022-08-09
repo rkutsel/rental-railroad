@@ -78,6 +78,22 @@ export const QUERY_ME = gql`
       aboutMe
       isLender
       isBorrower
+      rentals {
+        _id
+        name
+        description
+        isRented
+        pricePerDay
+        image
+      }
+      wishlist {
+        _id
+        name
+        description
+        isRented
+        pricePerDay
+        image
+      }
       orders {
         _id
         OrderDate
