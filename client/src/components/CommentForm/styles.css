@@ -1,0 +1,14 @@
+.add-comment {
+  width: 75%;
+}
+
+.add-comment input {
+  border: none;
+  border-radius: 20px;
+}
+
+.add-comment button {
+  margin-left: 10px;
+  background-color: #009ad4;
+  border: none;
+}
