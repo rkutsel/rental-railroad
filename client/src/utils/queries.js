@@ -59,6 +59,16 @@ export const QUERY_CATEGORIES = gql`
   }
 `;
 
+export const QUERY_CATEGORY = gql`
+query singleCategory($categoryId: ID!)
+  {
+    category(categoryId:$categoryId) {
+      _id
+      name
+    }
+  }
+`;
+
 export const QUERY_ME = gql`
   query me {
     me {
@@ -116,12 +126,4 @@ export const QUERY_USER = gql`
   }
 `;
 
-export const QUERY_FULLNAME = gql`
-  {
-    fullname {
-      _id
-      firstName
-      lastName
-    }
-  }
-`;
+
