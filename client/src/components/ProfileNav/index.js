@@ -3,7 +3,8 @@ import { useQuery } from "@apollo/client";
 import { QUERY_FULLNAME } from "../../utils/queries";
 
 import Auth from "../../utils/auth";
-import Nav from "react-bootstrap/Nav";
+import Tabs from "react-bootstrap/Tabs";
+import Tab from "react-bootstrap/Tab";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -21,20 +22,23 @@ function ProfileNav() {
             <h5>{fullName}</h5>
           </Col>
           <Col xs={9}>
-            <Nav variant="tabs" defaultActiveKey="aboutme">
-              <Nav.Item>
-                <Nav.Link eventKey="aboutme">About Me</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="rentals">My Rentals</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="wishlist">Wishlist</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="orderhistory">Order History</Nav.Link>
-              </Nav.Item>
-            </Nav>
+            <Tabs defaultActiveKey={1} id="profile-tab-view">
+              <Tab eventKey={1} title="About Me">
+                About Me
+                {/* <UserProfileInfo /> */}
+              </Tab>
+              <Tab eventKey={2} title="My Rentals">
+                My Rentals
+              </Tab>
+              <Tab eventKey={3} title="Wishlist">
+                Wishlist
+                {/* <OrderTable /> */}
+              </Tab>
+              <Tab eventKey={4} title="Order History">
+                Order History
+                {/* <OrderTable /> */}
+              </Tab>
+            </Tabs>
           </Col>
         </Row>
       </Container>
