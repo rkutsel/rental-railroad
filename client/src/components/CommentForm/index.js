@@ -42,27 +42,36 @@ const CommentForm = ({ productId }) => {
   };
 
   return (
-    <Form
-      onSubmit={handleFormSubmit}
-      className="add-comment d-flex flex-row mt-4 mb-4"
-    >
-      <Image
-        src="https://img.icons8.com/bubbles/100/000000/groups.png"
-        width="38"
-      />
-      <Form.Control
-        type="text"
-        className="form-control mr-3"
-        placeholder="Add your comment..."
-        value={commentText}
-        name="commentText"
-        id="commentText"
-        onChange={handleChange}
-      />
-      <Button className="btn btn-primary" type="submit">
-        Comment
-      </Button>
-    </Form>
+    <>
+      {Auth.loggedIn() ? (
+        <Form
+          onSubmit={handleFormSubmit}
+          className="add-comment d-flex flex-row mt-4 mb-4"
+        >
+          <Image
+            src="https://img.icons8.com/bubbles/100/000000/groups.png"
+            width="38"
+          />
+          <Form.Control
+            type="text"
+            className="form-control mr-3"
+            placeholder="Add your comment..."
+            value={commentText}
+            name="commentText"
+            id="commentText"
+            onChange={handleChange}
+          />
+          <Button className="btn btn-primary" type="submit">
+            Comment
+          </Button>
+        </Form>
+      ) : (
+        <p className="notLoggedIn px-3">
+          You need to be logged in to comment. Please&nbsp;
+          <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
+        </p>
+      )}
+    </>
   );
 };
 

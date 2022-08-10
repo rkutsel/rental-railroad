@@ -34,7 +34,7 @@ export const QUERY_ALL_PRODUCTS = gql`
 
 export const QUERY_SINGLE_PRODUCT = gql`
   query singleProduct($productId: ID!) {
-    product(productId: $productId) {
+    product(_id: $productId) {
       _id
       name
       description
@@ -42,6 +42,7 @@ export const QUERY_SINGLE_PRODUCT = gql`
       pricePerDay
       image
       comments {
+        _id
         author
         comment
         createdAt
@@ -60,9 +61,8 @@ export const QUERY_CATEGORIES = gql`
 `;
 
 export const QUERY_CATEGORY = gql`
-query singleCategory($categoryId: ID!)
-  {
-    category(categoryId:$categoryId) {
+  query singleCategory($categoryId: ID!) {
+    category(categoryId: $categoryId) {
       _id
       name
     }
@@ -141,5 +141,3 @@ export const QUERY_USER = gql`
     }
   }
 `;
-
-

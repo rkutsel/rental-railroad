@@ -1,116 +1,59 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import React from "react";
+import { Link, useParams } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+import { QUERY_SINGLE_PRODUCT } from "../utils/queries";
+import ProductDetailBtns from "../components/ProductDetailBtns";
+import CommentList from "../components/CommentList";
+import CommentForm from "../components/CommentForm";
 
-import Cart from '../components/Cart';
-import { useStoreContext } from '../utils/GlobalState';
-import {
-  REMOVE_FROM_CART,
-  UPDATE_CART_QUANTITY,
-  ADD_TO_CART,
-  UPDATE_PRODUCTS,
-} from '../utils/actions';
-import { QUERY_PRODUCTS } from '../utils/queries';
-import { idbPromise } from '../utils/helpers';
-import spinner from '../assets/spinner.gif';
+// Styling
+import "./styles.css";
+import Image from "react-bootstrap/esm/Image";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Stack from "react-bootstrap/Stack";
 
 function Detail() {
-  const [state, dispatch] = useStoreContext();
-  const { id } = useParams();
-
-  const [currentProduct, setCurrentProduct] = useState({});
-
-  const { loading, data } = useQuery(QUERY_PRODUCTS);
-
-  const { products, cart } = state;
-
-  useEffect(() => {
-    // already in global store
-    if (products.length) {
-      setCurrentProduct(products.find((product) => product._id === id));
-    }
-    // retrieved from server
-    else if (data) {
-      dispatch({
-        type: UPDATE_PRODUCTS,
-        products: data.products,
-      });
-
-      data.products.forEach((product) => {
-        idbPromise('products', 'put', product);
-      });
-    }
-    // get cache from idb
-    else if (!loading) {
-      idbPromise('products', 'get').then((indexedProducts) => {
-        dispatch({
-          type: UPDATE_PRODUCTS,
-          products: indexedProducts,
-        });
-      });
-    }
-  }, [products, data, loading, dispatch, id]);
-
-  const addToCart = () => {
-    const itemInCart = cart.find((cartItem) => cartItem._id === id);
-    if (itemInCart) {
-      dispatch({
-        type: UPDATE_CART_QUANTITY,
-        _id: id,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
-      });
-      idbPromise('cart', 'put', {
-        ...itemInCart,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
-      });
-    } else {
-      dispatch({
-        type: ADD_TO_CART,
-        product: { ...currentProduct, purchaseQuantity: 1 },
-      });
-      idbPromise('cart', 'put', { ...currentProduct, purchaseQuantity: 1 });
-    }
-  };
-
-  const removeFromCart = () => {
-    dispatch({
-      type: REMOVE_FROM_CART,
-      _id: currentProduct._id,
-    });
-
-    idbPromise('cart', 'delete', { ...currentProduct });
-  };
+  // Query Product Details
+  const { productId } = useParams();
+  const { loading, data } = useQuery(QUERY_SINGLE_PRODUCT, {
+    variables: { productId: productId },
+  });
+  const product = data?.product || {};
 
   return (
-    <>
-      {currentProduct && cart ? (
-        <div className="container my-1">
-          <Link to="/">← Back to Products</Link>
+    <Container className="productInfo">
+      <Row className="my-4">
+        <Col className="col-md-6">
+          <Image src={"/images/" + product.image} alt={product.name} />
+        </Col>
+        <Stack className="col-md-6 d-flex justify-content-center align-items-center">
+          <h1>{product.name}</h1>
 
-          <h2>{currentProduct.name}</h2>
+          <h5>
+            ${(Math.round(product.pricePerDay * 100) / 100).toFixed(2)} per day
+          </h5>
 
-          <p>{currentProduct.description}</p>
+          <p className="text-center">{product.description}</p>
 
-          <p>
-            <strong>Price:</strong>${currentProduct.price}{' '}
-            <button onClick={addToCart}>Add to Cart</button>
-            <button
-              disabled={!cart.find((p) => p._id === currentProduct._id)}
-              onClick={removeFromCart}
-            >
-              Remove from Cart
-            </button>
-          </p>
-
-          <img
-            src={`/images/${currentProduct.image}`}
-            alt={currentProduct.name}
-          />
-        </div>
-      ) : null}
-      {loading ? <img src={spinner} alt="loading" /> : null}
-      <Cart />
-    </>
+          <Row>
+            <Col>
+              <ProductDetailBtns
+                productId={product._id}
+                isRented={product.isRented}
+              />
+            </Col>
+          </Row>
+        </Stack>
+      </Row>
+      <Row>
+        <Col>
+          <CommentList comments={product.comments} />
+          <CommentForm productId={product._id} />
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
