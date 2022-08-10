@@ -8,7 +8,7 @@ import Container from "react-bootstrap/Container";
 // import Cart from "../components/Cart";
 
 const Home = () => {
-  const [state, dispatch] = useStoreContext();
+  const [state] = useStoreContext();
 
   const { currentCategory } = state;
 
@@ -23,16 +23,14 @@ const Home = () => {
   if (!currentCategory) {
     return (
       <Container>
-        <h1 className="display-2 text-center">
-          Take a look at these <small className="text-muted">hot</small> items!
-        </h1>
+        <h1 className="display-2 text-center">Looking for Something?</h1>
         <ProductList />
       </Container>
     );
   } else {
     return (
       <Container>
-        <h1 className="display-2 text-center">{category.name}!</h1>
+        <h1 className="display-2 text-center">Looking for {category.name}?</h1>
         <ProductList />
       </Container>
     );
