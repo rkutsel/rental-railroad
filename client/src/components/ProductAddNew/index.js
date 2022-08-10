@@ -3,7 +3,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_CATEGORIES } from "../../utils/queries";
 import { ADD_PRODUCT } from "../../utils/mutations";
 import { v4 as uuidv4 } from "uuid";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import Auth from "../../utils/auth";
 import Row from "react-bootstrap/Row";
@@ -160,7 +160,7 @@ function ProductAddNew() {
                               ...formState,
                               category: e.target.value,
                             });
-                          }} // onChange={(e) => setFormState(e.target)}
+                          }}
                           variant="outline-primary"
                           title="Dropdown"
                           id="input-group-dropdown-4"
@@ -199,7 +199,11 @@ function ProductAddNew() {
                       </InputGroup>
                     </Form.Group>
                     <Stack gap={2} className="col-md-5 mx-auto mb-2">
-                      <Button variant="outline-primary" type="submit">
+                      <Button
+                        onClick={() => <h1>added new product</h1>}
+                        variant="outline-primary"
+                        type="submit"
+                      >
                         Add Product
                       </Button>
                     </Stack>
