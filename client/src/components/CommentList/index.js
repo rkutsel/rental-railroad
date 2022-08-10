@@ -39,7 +39,7 @@ const CommentList = ({ comments = [] }) => {
               <ListGroup className="list-unstyled">
                 {comments &&
                   comments.map((comment) => (
-                    <li className="media">
+                    <li key={comment._id} className="media">
                       <span className="round pt-2">
                         <img
                           src="https://img.icons8.com/bubbles/100/000000/groups.png"
