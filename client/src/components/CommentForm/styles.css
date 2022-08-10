@@ -12,3 +12,8 @@
   background-color: #009ad4;
   border: none;
 }
+
+.notLoggedIn {
+  color: grey;
+  font-style: italic;
+}
