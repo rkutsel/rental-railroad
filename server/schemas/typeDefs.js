@@ -27,7 +27,7 @@ const typeDefs = gql`
     description: String
     isRented: Boolean
     image: String
-    pricePerDay: Int
+    pricePerDay: Float
     category: Category
     comments: [Comment]
   }
@@ -61,6 +61,12 @@ const typeDefs = gql`
     _id: ID
     firstName: String
     lastName: String
+  }
+
+  scalar Upload
+
+  type File {
+    filename: String!
   }
 
   type Checkout {
@@ -126,14 +132,14 @@ const typeDefs = gql`
     addProduct(
       name: String!
       description: String!
-      isRented: Boolean!
-      image: String!
+      isRented: Boolean
+      image: String
       pricePerDay: Float!
       category: ID!
     ): Product
 
     updateProduct(_id: ID!, pricePerDay: Int!): Product
-
+    singleUpload(file: Upload!): Boolean!
     addCommentToProduct(productId: ID!, comment: String!): Product
   }
 `;

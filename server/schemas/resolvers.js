@@ -4,6 +4,9 @@ const { populate } = require("../models/User");
 const { signToken } = require("../utils/auth");
 const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
+const file = require("../utils/datastore");
+const upload = require("../utils/files");
+
 const resolvers = {
   Query: {
     categories: async () => {
@@ -180,11 +183,12 @@ const resolvers = {
       if (context.user) {
         const addedProduct = await Product.create(args);
 
-        return await User.findByIdAndUpdate(
+        await User.findByIdAndUpdate(
           { _id: context.user._id },
           { $addToSet: { rentals: addedProduct._id } },
           { new: true }
         );
+        return addedProduct;
       }
       throw new AuthenticationError("Not logged in");
     },
@@ -199,6 +203,33 @@ const resolvers = {
         );
       }
       throw new AuthenticationError("Not logged in");
+    },
+
+    // uploadFile: async (parent, args, context) => {
+    //   // upload.single("file");
+    //   const fileName = args.file.originalname;
+    //   const fileBuffer = args.file.buffer;
+
+    //   await file.uploadFile(fileName, fileBuffer).then((url) => {
+    //     console.log(url);
+    //   });
+    // },
+    singleUpload: async (parent, { file }, context) => {
+      if (context.user) {
+        const { filename } = await file;
+
+        // Invoking the `createReadStream` will return a Readable Stream.
+        // See https://nodejs.org/api/stream.html#stream_readable_streams
+        const stream = createReadStream();
+
+        // This is purely for demonstration purposes and will overwrite the
+        // local-file-output.txt in the current working directory on EACH upload.
+        const out = require("fs").createWriteStream("local-file-output.txt");
+        stream.pipe(out);
+        await finished(out);
+
+        return { filename, mimetype, encoding };
+      }
     },
 
     addCommentToProduct: async (parent, { productId, comment }, context) => {
