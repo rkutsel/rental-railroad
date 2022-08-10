@@ -3,6 +3,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_CATEGORIES } from "../../utils/queries";
 import { ADD_PRODUCT } from "../../utils/mutations";
 import { v4 as uuidv4 } from "uuid";
+import { Link } from "react-router-dom";
 
 import Auth from "../../utils/auth";
 import Row from "react-bootstrap/Row";
@@ -26,6 +27,9 @@ function ProductAddNew() {
 
   const categories = data?.categories || [];
   const [formState, setFormState] = useState({});
+
+  const [imgUrl, setImgUrl] = useState();
+  const [progresspercent, setProgresspercent] = useState(0);
 
   const handleClick = (e) => {
     const categoryId = e.target.getAttribute("value");
@@ -67,13 +71,11 @@ function ProductAddNew() {
     return formState.category;
   };
 
-  const onSelect = (e) => {
-    const value = e.target;
-    setFormState({ category: value });
-    console.log(value);
-  };
-  const [imgUrl, setImgUrl] = useState();
-  const [progresspercent, setProgresspercent] = useState(0);
+  // const onSelect = (e) => {
+  //   const value = e.target;
+  //   setFormState({ category: value });
+  //   console.log(value);
+  // };
 
   const handleUpload = (e) => {
     e.preventDefault();
@@ -98,12 +100,7 @@ function ProductAddNew() {
       },
       async () => {
         const url = await getDownloadURL(uploadTask.snapshot.ref);
-        setFormState({
-          ...formState,
-          image: url,
-        });
         setImgUrl(url);
-        console.log(imgUrl, formState);
       }
     );
   };
@@ -181,6 +178,10 @@ function ProductAddNew() {
                         </DropdownButton>
                       </InputGroup>
                     </Form.Group>
+                    <Form.Group controlId="formFile" className="mb-3">
+                      <Form.Label>Upload Product Photo</Form.Label>
+                      <Form.Control onChange={handleUpload} type="file" />
+                    </Form.Group>
                     <Form.Group className="mb-3">
                       <Form.Label>Price Per Day</Form.Label>
                       <InputGroup className="mb-3">
@@ -196,10 +197,6 @@ function ProductAddNew() {
                           aria-label="Dollar amount (with dot and two decimal places)"
                         />
                       </InputGroup>
-                    </Form.Group>
-                    <Form.Group controlId="formFile" className="mb-3">
-                      <Form.Label>Upload Product Photo</Form.Label>
-                      <Form.Control onChange={handleUpload} type="file" />
                     </Form.Group>
                     <Stack gap={2} className="col-md-5 mx-auto mb-2">
                       <Button variant="outline-primary" type="submit">
