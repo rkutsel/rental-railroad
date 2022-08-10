@@ -42,6 +42,7 @@ export const QUERY_SINGLE_PRODUCT = gql`
       pricePerDay
       image
       comments {
+        _id
         author
         comment
         createdAt
