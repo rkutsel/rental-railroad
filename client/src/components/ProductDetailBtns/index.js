@@ -1,19 +1,27 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ME } from "../../utils/queries";
+import { ADD_TO_WISHLIST } from "../../utils/mutations";
+// import { DELETE_PRODUCT } from "../../utils/mutations";
+import { UPDATE_PRODUCT } from "../../utils/mutations";
 import Auth from "../../utils/auth";
 
 // Styling
 import "./styles.css";
 import Button from "react-bootstrap/Button";
 
-const ProductDetailBtns = ({ productId }) => {
+const ProductDetailBtns = ({ productId, isRented }) => {
+  const [addToMyWishlist, { error }] = useMutation(ADD_TO_WISHLIST);
+  // const [deleteProduct, { error }] = useMutation(DELETE_PRODUCT);
+  const [updateProduct] = useMutation(UPDATE_PRODUCT);
+
   const { loading, data } = useQuery(QUERY_ME);
   const user = data?.me || {};
 
   const userRentals = user.rentals;
 
+  // Checking if user owns product to render the correct btn components
   function checkOwnership(product) {
     return product._id === productId;
   }
@@ -22,12 +30,59 @@ const ProductDetailBtns = ({ productId }) => {
     ? userRentals.find((product) => checkOwnership(product))
     : [];
 
+  // Conditional checked in button based on product rented status
+  let checkedInBtn;
+  if (isRented) {
+    checkedInBtn = (
+      <Button
+        onClick={() =>
+          updateProduct({
+            variables: {
+              productId: productId,
+              isRented: false,
+            },
+          })
+        }
+        className="mx-4"
+      >
+        Check In
+      </Button>
+    );
+  } else {
+    checkedInBtn = (
+      <Button
+        onClick={() =>
+          updateProduct({
+            variables: {
+              productId: productId,
+              isRented: true,
+            },
+          })
+        }
+        className="mx-4"
+      >
+        Check Out
+      </Button>
+    );
+  }
+
   // If user owns the product
   if (Auth.loggedIn() && hasOwnership) {
     return (
       <>
-        <Button className="mx-4">Check In</Button>
-        <Button>Remove</Button>
+        {checkedInBtn}
+        <Button
+          onClick={() =>
+            updateProduct({
+              variables: {
+                productId: productId,
+                isRented: true,
+              },
+            })
+          }
+        >
+          Remove
+        </Button>
       </>
     );
   }
@@ -36,7 +91,15 @@ const ProductDetailBtns = ({ productId }) => {
   return (
     <>
       <Button className="mx-4">Click to rent</Button>
-      <Button>
+      <Button
+      // onClick={() =>
+      //   removeProduct({
+      //     variables: {
+      //       productId: productId,
+      //     },
+      //   })
+      // }
+      >
         Add to wishlist&nbsp;
         <svg
           xmlns="http://www.w3.org/2000/svg"

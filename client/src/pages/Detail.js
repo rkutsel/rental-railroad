@@ -39,7 +39,10 @@ function Detail() {
 
           <Row>
             <Col>
-              <ProductDetailBtns productId={product._id} />
+              <ProductDetailBtns
+                productId={product._id}
+                isRented={product.isRented}
+              />
             </Col>
           </Row>
         </Stack>
