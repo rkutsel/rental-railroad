@@ -13,6 +13,10 @@ const resolvers = {
       return await Category.find();
     },
 
+    category: async (parent,{categoryId}) => {
+      return await Category.findById(categoryId);
+    },
+    
     products: async (parent, args) => {
       const params = {};
       console.log(args);

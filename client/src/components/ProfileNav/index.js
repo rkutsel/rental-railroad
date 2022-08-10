@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
-import { QUERY_FULLNAME } from "../../utils/queries";
+import { QUERY_ME } from "../../utils/queries";
 
 import Auth from "../../utils/auth";
 import Tabs from "react-bootstrap/Tabs";
@@ -9,10 +9,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 
+import UserProfileInfo from "../UserProfile";
+import OrderTable from "../OrderTable";
+import UserProductsList from "../UserProductsList"
+
 function ProfileNav() {
-  const { loading, data } = useQuery(QUERY_FULLNAME);
-  const fullName =
-    `${data?.fullname?.firstName} ${data?.fullname?.lastName}`.toUpperCase();
+  const { loading, data } = useQuery(QUERY_ME);
+  const userProfile = data?.me || {};
+  const fullName = `${userProfile.firstName} ${userProfile.lastName}`;
 
   if (Auth.loggedIn()) {
     return (
@@ -24,19 +28,16 @@ function ProfileNav() {
           <Col xs={9}>
             <Tabs defaultActiveKey={1} id="profile-tab-view">
               <Tab eventKey={1} title="About Me">
-                About Me
-                {/* <UserProfileInfo /> */}
+                 <UserProfileInfo AboutMe = {userProfile.aboutMe}/>
               </Tab>
               <Tab eventKey={2} title="My Rentals">
-                My Rentals
+                  <UserProductsList products = {userProfile.rentals}/>
               </Tab>
               <Tab eventKey={3} title="Wishlist">
-                Wishlist
-                {/* <OrderTable /> */}
+                  <UserProductsList products = {userProfile.wishlist}/>
               </Tab>
               <Tab eventKey={4} title="Order History">
-                Order History
-                {/* <OrderTable /> */}
+                  <OrderTable userOrders = {userProfile.orders}/>
               </Tab>
             </Tabs>
           </Col>
