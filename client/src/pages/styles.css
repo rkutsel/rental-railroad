@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap");
+
 :root {
   --purple: #9227fb;
   --spacing-one: calc(1rem * 0.5);
@@ -6,4 +8,15 @@
 
 section h1 {
   color: var(--purple);
+}
+
+.productInfo h1 {
+  font-family: "Fredoka One", cursive;
+  color: #fe6b48;
+}
+
+.productInfo button {
+  margin-left: 10px;
+  background-color: #ad5ffc;
+  border: none;
 }
