@@ -50,7 +50,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/products/:id" element={<Detail />} />
+              <Route path="/products/:productId" element={<Detail />} />
               <Route path="/products/addnew" element={<AddProduct />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="*" element={<NoMatch />} />
