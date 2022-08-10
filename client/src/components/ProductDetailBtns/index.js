@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_ME } from "../../utils/queries";
+import Auth from "../../utils/auth";
 
 // Styling
 import "./styles.css";
@@ -22,7 +23,7 @@ const ProductDetailBtns = ({ productId }) => {
     : [];
 
   // If user owns the product
-  if (hasOwnership) {
+  if (Auth.loggedIn() && hasOwnership) {
     return (
       <>
         <Button className="mx-4">Check In</Button>
