@@ -11,7 +11,7 @@ export default class Card extends Component {
   render() {
     let img;
     if (this.props.image) {
-      img = <img src={"/images/" + this.props.image} alt={this.props.name} />;
+      img = <img src={this.props.image} alt={this.props.name} />;
     } else {
       img = (
         <img

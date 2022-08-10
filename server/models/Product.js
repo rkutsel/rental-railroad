@@ -19,6 +19,7 @@ const productSchema = new Schema(
     isRented: {
       type: Boolean,
       required: true,
+      default: false,
     },
     image: {
       type: String,
