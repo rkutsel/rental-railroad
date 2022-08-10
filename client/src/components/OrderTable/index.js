@@ -1,8 +1,6 @@
 import React from "react";
-import { useQuery } from '@apollo/client';
-import { QUERY_ME } from '../../utils/queries';
 import Table from 'react-bootstrap/Table';
-import spinner from "../../assets/spinner.gif";
+
 
 
 function getDate(inputDate) {
@@ -10,14 +8,11 @@ function getDate(inputDate) {
     return date;
 };
 
-function OrderTable() {
-
-    const { loading, data } = useQuery(QUERY_ME);
-    const userOrders = data?.me.orders || {};
-    
+function OrderTable(props) {
+  
         return (
         <>
-        { userOrders.length? (
+        { props.userOrders ? (
         <Table striped>
             <thead> 
                 <tr>
@@ -29,7 +24,7 @@ function OrderTable() {
                     </tr>
             </thead>
             <tbody>
-              {userOrders.map((order) => (
+              {props.userOrders.map((order) => (
                 <tr key={order._id}>
                   <td>{getDate(order.OrderDate)}</td>
                   <td>{order.rentedProduct.name}</td>
@@ -45,7 +40,6 @@ function OrderTable() {
            </h3>
           )
           }      
-          {loading ? <img src={spinner} alt="loading" /> : null} 
         </>
         );
 }
