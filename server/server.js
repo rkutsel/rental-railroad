@@ -1,7 +1,5 @@
 const express = require("express");
-const multer = require("multer");
 const { ApolloServer } = require("apollo-server-express");
-const { createUploadLink } = require("apollo-upload-client");
 const path = require("path");
 const { authMiddleware } = require("./utils/auth");
 const { typeDefs, resolvers } = require("./schemas");
@@ -13,19 +11,13 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: authMiddleware,
-  link: createUploadLink({ uri: "/graphql" }),
 });
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-const upload = multer({
-  storage: multer.memoryStorage(),
-});
-
 // Serve up static assets
 app.use("/images", express.static(path.join(__dirname, "../client/images")));
-app.use(upload.single());
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
