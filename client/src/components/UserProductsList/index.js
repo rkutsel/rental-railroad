@@ -1,5 +1,6 @@
 import React from "react";
 import ProductItem from "../ProductItem";
+import { Container } from "react-bootstrap";
 
 // Bootstrap components
 import Col from "react-bootstrap/Col";
@@ -22,8 +23,8 @@ function UserProductsList(props) {
   return (
     <>
       { props.products ? (
-        <div className="cards d-flex align-items-center justify-content-center m-5">
-          <Row xs={1} md={3} className="g-4">
+        <Container className="cards">
+          <Row  s={1} className="g-4" >
             {props.products.map((product) => (
               <Col key={product._id}>
                 <ProductItem
@@ -38,7 +39,7 @@ function UserProductsList(props) {
               </Col>
             ))}
           </Row>
-        </div>
+        </Container>
       ) : (
         <h3 className="d-flex align-items-center justify-content-center m-5">
               No products!

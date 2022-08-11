@@ -12,6 +12,7 @@ import Container from "react-bootstrap/Container";
 import UserProfileInfo from "../UserProfile";
 import OrderTable from "../OrderTable";
 import UserProductsList from "../UserProductsList"
+import AddBtn from "../AddButton";
 
 function ProfileNav() {
   const { loading, data } = useQuery(QUERY_ME);
@@ -20,7 +21,7 @@ function ProfileNav() {
 
   if (Auth.loggedIn()) {
     return (
-      <Container>
+      <Container className = "m-5">
         <Row className = "d-flex justify-content-between">
           <Col lg = {4} >
             <Container className = "d-flex flex-column justify-content-center align-items-center">
@@ -34,8 +35,9 @@ function ProfileNav() {
           </Col>
           <Col lg = {8}>
             <Container>
-              <Tabs defaultActiveKey={2} id="profile-tab-view">
+              <Tabs defaultActiveKey={2} id="profile-tab-view"  className="mb-3" justify>
                 <Tab eventKey={2} title="My Rentals">
+                    <AddBtn BtnProp = { { action : "Add Product", link: '/products/addnew'}}/>
                     <UserProductsList products = {userProfile.rentals}/>
                 </Tab>
                 <Tab eventKey={3} title="Wishlist">
@@ -51,6 +53,11 @@ function ProfileNav() {
       </Container>
     );
   }
+  else {
+    return (
+      <h5> Your are not logged in</h5>
+    )
+}
 }
 
 export default ProfileNav;
