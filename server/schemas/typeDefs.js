@@ -80,7 +80,7 @@ const typeDefs = gql`
 
   type Query {
     categories: [Category]
-    category (categoryId: ID!) : Category
+    category(categoryId: ID!): Category
     products(category: ID, name: String): [Product]
     product(_id: ID!): Product
     user(userId: ID): User
@@ -139,7 +139,7 @@ const typeDefs = gql`
       category: ID!
     ): Product
 
-    updateProduct(_id: ID!, pricePerDay: Int!): Product
+    updateProduct(_id: ID!, isRented: Boolean!): Product
     singleUpload(file: Upload!): Boolean!
     addCommentToProduct(productId: ID!, comment: String!): Product
   }
