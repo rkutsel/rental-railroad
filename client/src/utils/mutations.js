@@ -141,14 +141,20 @@ export const ADD_TO_WISHLIST = gql`
       lastName
       email
       aboutMe
-      rentals
+      rentals {
+        _id
+      }
       wishlist {
         _id
       }
       isLender
       isBorrower
-      orders
-      addresses
+      orders {
+        _id
+      }
+      addresses {
+        _id
+      }
     }
   }
 `;
