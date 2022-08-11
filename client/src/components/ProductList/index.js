@@ -3,9 +3,8 @@ import ProductItem from "../ProductItem";
 import { useStoreContext } from "../../utils/GlobalState";
 import { UPDATE_PRODUCTS } from "../../utils/actions";
 import { useQuery } from "@apollo/client";
-import { QUERY_PRODUCTS } from "../../utils/queries";
+import { QUERY_PRODUCTS, QUERY_ME } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
-import spinner from "../../assets/spinner.gif";
 
 // Bootstrap components
 import Col from "react-bootstrap/Col";
@@ -19,6 +18,20 @@ function ProductList() {
   const { loading, data } = useQuery(QUERY_PRODUCTS);
 
   console.log(state);
+
+  const { data: userData } = useQuery(QUERY_ME);
+  const userProductIds = userData?.me.rentals.map((rental) => rental._id) || [];
+
+  function isOwner(id) {
+    if (userProductIds.includes(id)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  console.log(userProductIds);
+  // console.log(data._id);
 
   useEffect(() => {
     if (data) {
@@ -77,6 +90,7 @@ function ProductList() {
                   price={product.pricePerDay}
                   description={product.description}
                   isRented={product.isRented}
+                  isOwner={isOwner(product._id)}
                 />
               </Col>
             ))}
@@ -87,7 +101,6 @@ function ProductList() {
           No products to rent!
         </h3>
       )}
-      {loading ? <img src={spinner} alt="loading" /> : null}
     </>
   );
 }
