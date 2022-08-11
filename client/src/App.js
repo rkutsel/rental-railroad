@@ -18,8 +18,6 @@ import Nav from "./components/Nav";
 import { StoreProvider } from "./utils/GlobalState";
 
 // Do we want a 404 page v
-import NoMatch from "./pages/NoMatch";
-
 const httpLink = createHttpLink({
   uri: "/graphql",
 });
@@ -53,7 +51,6 @@ function App() {
               <Route path="/products/:productId" element={<Detail />} />
               <Route path="/products/addnew" element={<AddProduct />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="*" element={<NoMatch />} />
             </Routes>
           </StoreProvider>
         </div>

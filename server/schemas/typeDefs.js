@@ -63,12 +63,6 @@ const typeDefs = gql`
     lastName: String
   }
 
-  scalar Upload
-
-  type File {
-    filename: String!
-  }
-
   type Checkout {
     session: ID
   }
@@ -80,7 +74,7 @@ const typeDefs = gql`
 
   type Query {
     categories: [Category]
-    category (categoryId: ID!) : Category
+    category(categoryId: ID!): Category
     products(category: ID, name: String): [Product]
     product(_id: ID!): Product
     user(userId: ID): User
@@ -140,7 +134,6 @@ const typeDefs = gql`
     ): Product
 
     updateProduct(_id: ID!, pricePerDay: Int!): Product
-    singleUpload(file: Upload!): Boolean!
     addCommentToProduct(productId: ID!, comment: String!): Product
   }
 `;
