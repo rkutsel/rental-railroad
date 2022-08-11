@@ -74,15 +74,17 @@ export const ADD_ORDER = gql`
 `;
 
 export const ADD_COMMENT = gql`
-  mutation addCommentToProduct($productId: ID!, $comment: String!) {
-    addCommentToProduct(productId: $productId, comment: $comment) {
+  mutation addCommentToProduct($productId: ID!, $commentText: String!) {
+    addCommentToProduct(productId: $productId, comment: $commentText) {
       _id
       name
       description
       isRented
       image
       pricePerDay
-      category
+      category {
+        name
+      }
       comments {
         _id
         comment
