@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ME } from "../../utils/queries";
 import { ADD_TO_WISHLIST } from "../../utils/mutations";
-// import { DELETE_PRODUCT } from "../../utils/mutations";
+import { REMOVE_PRODUCT } from "../../utils/mutations";
 import { UPDATE_PRODUCT } from "../../utils/mutations";
 import Auth from "../../utils/auth";
 
@@ -13,7 +13,7 @@ import Button from "react-bootstrap/Button";
 
 const ProductDetailBtns = ({ productId, isRented }) => {
   const [addToMyWishlist] = useMutation(ADD_TO_WISHLIST);
-  // const [deleteProduct, { error }] = useMutation(DELETE_PRODUCT);
+  const [removeProduct, { error }] = useMutation(REMOVE_PRODUCT);
   const [updateProduct] = useMutation(UPDATE_PRODUCT);
 
   const { loading, data } = useQuery(QUERY_ME);
@@ -72,13 +72,13 @@ const ProductDetailBtns = ({ productId, isRented }) => {
       <>
         {checkedInBtn}
         <Button
-        // onClick={() =>
-        //   removeProduct({
-        //     variables: {
-        //       productId: productId,
-        //     },
-        //   })
-        // }
+          onClick={() =>
+            removeProduct({
+              variables: {
+                productId: productId,
+              },
+            })
+          }
         >
           Remove
         </Button>

@@ -138,7 +138,8 @@ const typeDefs = gql`
       category: ID!
     ): Product
 
-    updateProduct(_id: ID!, pricePerDay: Int!): Product
+    updateProduct(productId: ID!, pricePerDay: Int!): Product
+    removeProduct(productId:ID!): Product
     singleUpload(file: Upload!): Boolean!
     addCommentToProduct(productId: ID!, comment: String!): Product
   }

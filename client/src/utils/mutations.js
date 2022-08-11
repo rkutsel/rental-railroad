@@ -135,6 +135,15 @@ export const UPDATE_PRODUCT = gql`
   }
 `;
 
+export const REMOVE_PRODUCT = gql`
+mutation removeProduct($productId: ID!) {
+  removeProduct(productId: $productId) {
+    _id
+    name
+  }
+}
+`;
+
 export const ADD_TO_WISHLIST = gql`
   mutation addToMyWishlist($productId: ID!) {
     addToMyWishlist(productId: $productId) {

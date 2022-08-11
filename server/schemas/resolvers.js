@@ -1,11 +1,10 @@
 const { AuthenticationError } = require("apollo-server-express");
 const { User, Product, Category, Order } = require("../models");
-const { populate } = require("../models/User");
 const { signToken } = require("../utils/auth");
 const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
 const file = require("../utils/datastore");
-const upload = require("../utils/files");
+
 
 const resolvers = {
   Query: {
@@ -195,6 +194,19 @@ const resolvers = {
         return addedProduct;
       }
       throw new AuthenticationError("Not logged in");
+    },
+
+    removeProduct: async (parent, {productId}, context) => {
+      console.log (productId);
+      if (context.user) {
+        const removedProduct = await Product.findOneAndDelete({_id: productId});
+        await User.findOneAndUpdate (
+          {_id: context.user._id },
+          {$pull: {rentals: productId}},
+          {new: true}
+        )
+        return(removedProduct);
+        }
     },
 
     // Function to update product
