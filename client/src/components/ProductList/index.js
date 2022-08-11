@@ -65,7 +65,7 @@ function ProductList() {
   return (
     <>
       {state.products.length ? (
-        <div className="cards d-flex">
+        <div className="cards d-flex justify-content-center">
           <Row xs={1} md={filterProducts().length < 3 ? 2 : 3} className="g-4">
             {filterProducts().map((product) => (
               <Col key={product._id}>
