@@ -25,7 +25,7 @@ const Home = () => {
           style={{ fontFamily: "Fredoka One", color: "#fe6b48" }}
           className="display-2 text-center"
         >
-          Take a look at these hot items!
+          See what's for rent today!
         </h1>
         <ProductList />
       </Container>
@@ -37,7 +37,7 @@ const Home = () => {
           style={{ fontFamily: "Fredoka One", color: "#fe6b48" }}
           className="display-2 text-center"
         >
-          Explore these {category.name} for rent!
+          {category.name} for rent!
         </h1>
         <ProductList />
       </Container>
