@@ -17,20 +17,18 @@ function CategoryMenu() {
   const categories = data?.categories || [];
 
   const handleClick = (e) => {
-
-    const category = e.target.getAttribute(("value"));
+    const category = e.target.getAttribute("value");
 
     dispatch({
       type: UPDATE_CURRENT_CATEGORY,
-      currentCategory: (category),
+      currentCategory: category,
     });
-
   };
 
   if (!categories.length) {
     return (
       <NavDropdown
-        className="p-2 hover"
+        className="p-2"
         title="Category"
         id="collapsible-nav-dropdown"
       >
@@ -43,12 +41,19 @@ function CategoryMenu() {
 
   return (
     <NavDropdown
-      className="p-2 hover nav-text"
+      className="p-2 nav-text"
       title="Category"
       id="collapsible-nav-dropdown"
     >
       {categories.map((item) => (
-        <NavDropdown.Item onClick={handleClick} className="nav-text" as={Link} to="/" value={item._id} key={item._id}>
+        <NavDropdown.Item
+          onClick={handleClick}
+          className="nav-text"
+          as={Link}
+          to="/"
+          value={item._id}
+          key={item._id}
+        >
           {item.name}
         </NavDropdown.Item>
       ))}

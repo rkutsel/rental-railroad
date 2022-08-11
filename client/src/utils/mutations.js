@@ -118,19 +118,10 @@ export const ADD_PRODUCT = gql`
 `;
 
 export const UPDATE_PRODUCT = gql`
-  mutation updateProduct($_id: ID!, $pricePerDay: Int!) {
-    updateProduct(_id: $_id, pricePerDay: $pricePerDay) {
+  mutation UpdateProduct($_id: ID!, $isRented: Boolean!) {
+    updateProduct(_id: $_id, isRented: $isRented) {
       _id
-      name
-      description
       isRented
-      image
-      pricePerDay
-      category
-      comments {
-        _id
-        comment
-      }
     }
   }
 `;

@@ -38,7 +38,7 @@ const ProductDetailBtns = ({ productId, isRented }) => {
         onClick={() =>
           updateProduct({
             variables: {
-              productId: productId,
+              _id: productId,
               isRented: false,
             },
           })
@@ -54,7 +54,7 @@ const ProductDetailBtns = ({ productId, isRented }) => {
         onClick={() =>
           updateProduct({
             variables: {
-              productId: productId,
+              _id: productId,
               isRented: true,
             },
           })

@@ -12,10 +12,10 @@ const resolvers = {
       return await Category.find();
     },
 
-    category: async (parent,{categoryId}) => {
+    category: async (parent, { categoryId }) => {
       return await Category.findById(categoryId);
     },
-    
+
     products: async (parent, args) => {
       const params = {};
       console.log(args);
@@ -213,11 +213,11 @@ const resolvers = {
     },
 
     // Function to update product
-    updateProduct: async (parent, { _id, pricePerDay }, context) => {
+    updateProduct: async (parent, { _id, isRented }, context) => {
       if (context.user) {
         return await Product.findByIdAndUpdate(
           _id,
-          { pricePerDay: pricePerDay },
+          { isRented: isRented },
           { new: true }
         );
       }
