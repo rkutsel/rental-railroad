@@ -23,14 +23,24 @@ const Home = () => {
   if (!currentCategory) {
     return (
       <Container>
-        <h1 className="display-2 text-center">Looking for Something?</h1>
+        <h1
+          style={{ fontFamily: "Fredoka One", color: "#fe6b48" }}
+          className="display-2 text-center"
+        >
+          Take a look at these hot items!
+        </h1>
         <ProductList />
       </Container>
     );
   } else {
     return (
       <Container>
-        <h1 className="display-2 text-center">Looking for {category.name}?</h1>
+        <h1
+          style={{ fontFamily: "Fredoka One", color: "#fe6b48" }}
+          className="display-2 text-center"
+        >
+          Explore these {category.name} for rent!
+        </h1>
         <ProductList />
       </Container>
     );

@@ -1,11 +1,20 @@
 import React from "react";
 import ProductItem from "../ProductItem";
+import { useQuery } from "@apollo/client";
+import { QUERY_ME } from "../../utils/queries";
 
 // Bootstrap components
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
 function UserProductsList(props) {
+  const { loading, data } = useQuery(QUERY_ME);
+  const user = data?.me || {};
+
+  const userRentals = user.rentals;
+
+  console.log(userRentals);
+  console.log(props.products);
 
   function returnColor() {
     let num = Math.floor(Math.random() * (3 - 1 + 1) + 1);
@@ -21,7 +30,7 @@ function UserProductsList(props) {
 
   return (
     <>
-      { props.products ? (
+      {props.products ? (
         <div className="cards d-flex">
           <Row xs={1} md={3} className="g-4">
             {props.products.map((product) => (
@@ -41,7 +50,7 @@ function UserProductsList(props) {
         </div>
       ) : (
         <h3 className="d-flex align-items-center justify-content-center m-5">
-              No products!
+          No products!
         </h3>
       )}
     </>
