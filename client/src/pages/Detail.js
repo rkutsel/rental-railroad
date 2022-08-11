@@ -26,11 +26,7 @@ function Detail() {
     <Container className="productInfo">
       <Row className="my-4">
         <Col className="col-md-6">
-          <Image
-            className="img-fluid"
-            src={"/images/" + product.image}
-            alt={product.name}
-          />
+          <Image className="img-fluid" src={product.image} alt={product.name} />
         </Col>
         <Stack className="col-md-6 d-flex justify-content-center align-items-center">
           <h1>{product.name}</h1>
