@@ -60,12 +60,13 @@ function ProductList() {
       return "purple";
     }
   }
+  console.log(state.products.length);
 
   return (
     <>
       {state.products.length ? (
         <div className="cards d-flex">
-          <Row xs={1} md={3} className="g-4">
+          <Row xs={1} md={filterProducts().length < 3 ? 2 : 3} className="g-4">
             {filterProducts().map((product) => (
               <Col key={product._id}>
                 <ProductItem
