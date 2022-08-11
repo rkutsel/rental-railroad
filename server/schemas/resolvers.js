@@ -197,7 +197,7 @@ const resolvers = {
     },
 
     removeProduct: async (parent, {productId}, context) => {
-      console.log (productId);
+  
       if (context.user) {
         const removedProduct = await Product.findOneAndDelete({_id: productId});
         await User.findOneAndUpdate (
