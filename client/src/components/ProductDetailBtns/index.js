@@ -6,12 +6,15 @@ import { ADD_TO_WISHLIST } from "../../utils/mutations";
 import { REMOVE_PRODUCT } from "../../utils/mutations";
 import { UPDATE_PRODUCT } from "../../utils/mutations";
 import Auth from "../../utils/auth";
+import { useNavigate } from "react-router-dom";
 
 // Styling
 import "./styles.css";
 import Button from "react-bootstrap/Button";
 
+
 const ProductDetailBtns = ({ productId, isRented }) => {
+
   const [addToMyWishlist] = useMutation(ADD_TO_WISHLIST);
   const [removeProduct, { error }] = useMutation(REMOVE_PRODUCT);
   const [updateProduct] = useMutation(UPDATE_PRODUCT);
@@ -20,6 +23,8 @@ const ProductDetailBtns = ({ productId, isRented }) => {
   const user = data?.me || {};
 
   const userRentals = user.rentals;
+
+  let navigate = useNavigate();
 
   // Checking if user owns product to render the correct btn components
   function checkOwnership(product) {
@@ -72,12 +77,20 @@ const ProductDetailBtns = ({ productId, isRented }) => {
       <>
         {checkedInBtn}
         <Button
-          onClick={() =>
-            removeProduct({
+          onClick={async () => {
+
+            const removedProductFromUser = await removeProduct({
               variables: {
                 productId: productId,
               },
             })
+            
+            if (removedProductFromUser) {
+              setTimeout(() => {
+                navigate("/profile", { replace: true });
+              }, 1000);
+            }
+          }
           }
         >
           Remove
@@ -91,12 +104,18 @@ const ProductDetailBtns = ({ productId, isRented }) => {
     <>
       <Button className="mx-4">Click to rent</Button>
       <Button
-        onClick={() =>
-          addToMyWishlist({
+        onClick={async () => {
+          const addedProduct = await addToMyWishlist({
             variables: {
               productId: productId,
             },
           })
+          if (addedProduct) {
+            setTimeout(() => {
+              navigate("/profile", { replace: true });
+            }, 1000);
+          }
+        }
         }
       >
         Add to wishlist&nbsp;

@@ -142,13 +142,15 @@ const resolvers = {
     },
 
     addToMyWishlist: async (parent, { productId }, context) => {
-      console.log(context);
+
       if (context.user) {
-        return await User.findByIdAndUpdate(
+        const user = await User.findByIdAndUpdate(
           { _id: context.user._id },
           { $addToSet: { wishlist: productId } },
           { new: true }
         );
+
+        return user;
       }
 
       throw new AuthenticationError("Not logged in");
@@ -184,6 +186,7 @@ const resolvers = {
     // Function to create product
     addProduct: async (parent, args, context) => {
       if (context.user) {
+
         const addedProduct = await Product.create(args);
 
         await User.findByIdAndUpdate(
@@ -193,23 +196,34 @@ const resolvers = {
         );
         return addedProduct;
       }
+
       throw new AuthenticationError("Not logged in");
     },
 
     removeProduct: async (parent, {productId}, context) => {
-  
-      if (context.user) {
-        const removedProduct = await Product.findOneAndDelete({_id: productId});
-        console.log(removedProduct); 
 
-        await User.findOneAndUpdate (
-          {_id: context.user._id },
-          {$pull: {rentals: removedProduct._id}},
-          {new: true}
-        )
-        return removedProduct;
+      try {
+        if (context.user) {
+
+          let [product, user ] = await Promise.all([
+            Product.findOneAndDelete({ _id: productId }),
+            User.findOneAndUpdate(
+              { _id: context.user._id },
+              { $pull: { rentals: productId } },
+              { new: true }
+            )
+          ])
+          return user;
         }
-        throw new AuthenticationError("Not logged in");
+        else {
+          throw new AuthenticationError("Not logged in");
+        }
+    }
+    catch (err) {
+      console.log(err);        
+      console.log ("somthing went wrong while deleting product")
+    }; 
+
     },
 
     // Function to update product

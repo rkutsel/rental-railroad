@@ -1,5 +1,7 @@
 import React from "react";
+import Container from "react-bootstrap/Container";
 import Table from 'react-bootstrap/Table';
+import "./style.css"
 
 
 
@@ -11,7 +13,7 @@ function getDate(inputDate) {
 function OrderTable(props) {
   
         return (
-        <>
+        <Container className = "p-5">
         { props.userOrders ? (
         <Table striped>
             <thead> 
@@ -36,11 +38,11 @@ function OrderTable(props) {
             </tbody>
           </Table>) : (
             <h3 className="d-flex align-items-center justify-content-center m-5">
-              No products to rent!
+              No Orders!! 
            </h3>
           )
           }      
-        </>
+        </Container>
         );
 }
     
