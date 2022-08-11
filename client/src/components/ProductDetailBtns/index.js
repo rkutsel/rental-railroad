@@ -12,7 +12,7 @@ import "./styles.css";
 import Button from "react-bootstrap/Button";
 
 const ProductDetailBtns = ({ productId, isRented }) => {
-  const [addToMyWishlist, { error }] = useMutation(ADD_TO_WISHLIST);
+  const [addToMyWishlist] = useMutation(ADD_TO_WISHLIST);
   // const [deleteProduct, { error }] = useMutation(DELETE_PRODUCT);
   const [updateProduct] = useMutation(UPDATE_PRODUCT);
 
@@ -72,14 +72,13 @@ const ProductDetailBtns = ({ productId, isRented }) => {
       <>
         {checkedInBtn}
         <Button
-          onClick={() =>
-            updateProduct({
-              variables: {
-                productId: productId,
-                isRented: true,
-              },
-            })
-          }
+        // onClick={() =>
+        //   removeProduct({
+        //     variables: {
+        //       productId: productId,
+        //     },
+        //   })
+        // }
         >
           Remove
         </Button>
@@ -92,13 +91,13 @@ const ProductDetailBtns = ({ productId, isRented }) => {
     <>
       <Button className="mx-4">Click to rent</Button>
       <Button
-      // onClick={() =>
-      //   removeProduct({
-      //     variables: {
-      //       productId: productId,
-      //     },
-      //   })
-      // }
+        onClick={() =>
+          addToMyWishlist({
+            variables: {
+              productId: productId,
+            },
+          })
+        }
       >
         Add to wishlist&nbsp;
         <svg
