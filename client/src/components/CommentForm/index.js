@@ -45,7 +45,7 @@ const CommentForm = ({ productId }) => {
       {Auth.loggedIn() ? (
         <Form
           onSubmit={handleFormSubmit}
-          className="add-comment d-flex flex-row mt-4 mb-4"
+          className="add-comment col-md-8 col-sm-12 d-flex flex-row mt-4 mb-4"
         >
           <Image
             src="https://img.icons8.com/bubbles/100/000000/groups.png"
