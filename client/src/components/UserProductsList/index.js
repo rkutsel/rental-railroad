@@ -9,12 +9,18 @@ import Row from "react-bootstrap/Row";
 
 function UserProductsList(props) {
   const { loading, data } = useQuery(QUERY_ME);
-  const user = data?.me || {};
+  const userProductIds = data?.me.rentals.map((rental) => rental._id) || [];
 
-  const userRentals = user.rentals;
-
-  console.log(userRentals);
+  console.log(userProductIds);
   console.log(props.products);
+
+  function isOwner(id) {
+    if (userProductIds.includes(id)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   function returnColor() {
     let num = Math.floor(Math.random() * (3 - 1 + 1) + 1);
@@ -43,6 +49,7 @@ function UserProductsList(props) {
                   price={product.pricePerDay}
                   description={product.description}
                   isRented={product.isRented}
+                  isOwner={isOwner(product._id)}
                 />
               </Col>
             ))}

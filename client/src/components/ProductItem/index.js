@@ -22,7 +22,9 @@ export default class Card extends Component {
     }
 
     let overlay;
-    if (this.props.isRented) {
+    if (this.props.isOwner) {
+      overlay = null;
+    } else if (this.props.isRented) {
       overlay = (
         <div className="overlay-div d-flex justify-content-center align-items-center">
           <h1>Rented</h1>
