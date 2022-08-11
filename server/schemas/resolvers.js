@@ -200,13 +200,16 @@ const resolvers = {
   
       if (context.user) {
         const removedProduct = await Product.findOneAndDelete({_id: productId});
+        console.log(removedProduct); 
+
         await User.findOneAndUpdate (
           {_id: context.user._id },
-          {$pull: {rentals: productId}},
+          {$pull: {rentals: removedProduct._id}},
           {new: true}
         )
-        return(removedProduct);
+        return removedProduct;
         }
+        throw new AuthenticationError("Not logged in");
     },
 
     // Function to update product
