@@ -6,7 +6,7 @@ import "./style.css"
 
 
 function getDate(inputDate) {
-    const [date,time] = inputDate.split("T");
+    const [date,time] = inputDate.split(",");
     return date;
 };
 
