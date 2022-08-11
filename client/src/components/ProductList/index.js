@@ -87,7 +87,6 @@ function ProductList() {
           No products to rent!
         </h3>
       )}
-      {loading ? <img src={spinner} alt="loading" /> : null}
     </>
   );
 }
