@@ -96,15 +96,13 @@ export const ADD_PRODUCT = gql`
   mutation addProduct(
     $name: String!
     $description: String!
-    $isRented: Boolean!
-    $image: String!
     $pricePerDay: Float!
+    $image: String!
     $category: ID!
   ) {
     addProduct(
       name: $name
       description: $description
-      isRented: $isRented
       image: $image
       pricePerDay: $pricePerDay
       category: $category
@@ -112,14 +110,7 @@ export const ADD_PRODUCT = gql`
       _id
       name
       description
-      isRented
-      image
       pricePerDay
-      category
-      comments {
-        _id
-        comment
-      }
     }
   }
 `;
