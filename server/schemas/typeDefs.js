@@ -133,7 +133,6 @@ const typeDefs = gql`
     addProduct(
       name: String!
       description: String!
-      isRented: Boolean
       image: String
       pricePerDay: Float!
       category: ID!
