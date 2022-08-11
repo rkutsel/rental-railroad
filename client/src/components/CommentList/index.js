@@ -34,7 +34,7 @@ const CommentList = ({ comments = [] }) => {
 
       <Container className="mt-1">
         <Row>
-          <Col className="col-md-12">
+          <Col className="col-md-8 col-sm-12">
             <Card className="card">
               <ListGroup className="list-unstyled">
                 {comments &&
