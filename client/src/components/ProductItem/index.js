@@ -22,21 +22,32 @@ export default class Card extends Component {
     }
 
     let overlay;
+    let ownership;
+
     if (this.props.isOwner) {
+      // overlay = null;
       overlay = null;
+      ownership = (
+        <div className="owner-div d-flex justify-content-center align-items-center">
+          <h1>⭐</h1>
+        </div>
+      );
     } else if (this.props.isRented) {
       overlay = (
         <div className="overlay-div d-flex justify-content-center align-items-center">
           <h1>Rented</h1>
         </div>
       );
+      ownership = null;
     } else {
       overlay = null;
+      ownership = null;
     }
 
     return (
       <div className="Card">
         {overlay}
+        {ownership}
         <Link to={`/products/${this.props._id}`}>{img}</Link>
         <div className={"Card-body " + this.props.color}>
           <div className="d-flex justify-content-between">
