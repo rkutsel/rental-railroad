@@ -12,6 +12,7 @@ import Container from "react-bootstrap/Container";
 import UserProfileInfo from "../UserProfile";
 import OrderTable from "../OrderTable";
 import UserProductsList from "../UserProductsList"
+import AddBtn from "../AddButton";
 
 function ProfileNav() {
   const { loading, data } = useQuery(QUERY_ME);
@@ -20,31 +21,43 @@ function ProfileNav() {
 
   if (Auth.loggedIn()) {
     return (
-      <Container className="flex-row pt-3">
-        <Row>
-          <Col xs={3} className="pt-2">
-            <h5>{fullName}</h5>
+      <Container className = "m-5">
+        <Row className = "d-flex justify-content-between">
+          <Col lg = {4} >
+            <Container className = "d-flex flex-column justify-content-center align-items-center">
+              <div xs={12} className = "p-10 m-10">
+                  <h4>{fullName}</h4>
+              </div>
+              <div xs={12}>
+                  <UserProfileInfo AboutMe = {userProfile.aboutMe}/>
+              </div>
+            </Container>
           </Col>
-          <Col xs={9}>
-            <Tabs defaultActiveKey={1} id="profile-tab-view">
-              <Tab eventKey={1} title="About Me">
-                 <UserProfileInfo AboutMe = {userProfile.aboutMe}/>
-              </Tab>
-              <Tab eventKey={2} title="My Rentals">
-                  <UserProductsList products = {userProfile.rentals}/>
-              </Tab>
-              <Tab eventKey={3} title="Wishlist">
-                  <UserProductsList products = {userProfile.wishlist}/>
-              </Tab>
-              <Tab eventKey={4} title="Order History">
-                  <OrderTable userOrders = {userProfile.orders}/>
-              </Tab>
+          <Col lg = {8}>
+            <Container>
+              <Tabs defaultActiveKey={2} id="profile-tab-view"  className="mb-3" justify>
+                <Tab eventKey={2} title="My Rentals">
+                    <AddBtn BtnProp = { { action : "Add Product", link: '/products/addnew'}}/>
+                    <UserProductsList products = {userProfile.rentals}/>
+                </Tab>
+                <Tab eventKey={3} title="Wishlist">
+                    <UserProductsList products = {userProfile.wishlist}/>
+                </Tab>
+                <Tab eventKey={4} title="Order History">
+                    <OrderTable userOrders = {userProfile.orders}/>
+                </Tab>
             </Tabs>
+          </Container>
           </Col>
         </Row>
       </Container>
     );
   }
+  else {
+    return (
+      <h5> Your are not logged in</h5>
+    )
+}
 }
 
 export default ProfileNav;
