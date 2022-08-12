@@ -139,6 +139,7 @@ const typeDefs = gql`
     ): Product
 
     updateProduct(_id: ID!, isRented: Boolean!): Product
+    removeProduct(productId: ID!): User
     singleUpload(file: Upload!): Boolean!
     addCommentToProduct(productId: ID!, comment: String!): Product
   }

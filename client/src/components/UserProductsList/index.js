@@ -41,7 +41,7 @@ function UserProductsList(props) {
     <>
       {props.products ? (
         <Container className="cards">
-          <Row s={1} className="g-4">
+          <Row  s={1} md={2} className="g-4" >
             {props.products.map((product) => (
               <Col key={product._id}>
                 <ProductItem

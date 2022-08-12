@@ -21,16 +21,14 @@ function ProfileNav() {
 
   if (Auth.loggedIn()) {
     return (
-      <Container className = "m-5">
+      <Container className="p-5">
         <Row className = "d-flex justify-content-between">
           <Col lg = {4} >
             <Container className = "d-flex flex-column justify-content-center align-items-center">
               <div xs={12} className = "p-10 m-10">
-                  <h4>{fullName}</h4>
+                  <h4 className = "pb-5">{fullName}</h4>
               </div>
-              <div xs={12}>
-                  <UserProfileInfo AboutMe = {userProfile.aboutMe}/>
-              </div>
+              <UserProfileInfo AboutMe = {userProfile.aboutMe}/>
             </Container>
           </Col>
           <Col lg = {8}>
@@ -38,9 +36,11 @@ function ProfileNav() {
               <Tabs defaultActiveKey={2} id="profile-tab-view"  className="mb-3" justify>
                 <Tab eventKey={2} title="My Rentals">
                     <AddBtn BtnProp = { { action : "Add Product", link: '/products/addnew'}}/>
+                    <p align= "right">Couldn't find your product here? please refresh page</p>
                     <UserProductsList products = {userProfile.rentals}/>
                 </Tab>
                 <Tab eventKey={3} title="Wishlist">
+                    <p align= "right">Couldn't find your product here? please refresh page</p>
                     <UserProductsList products = {userProfile.wishlist}/>
                 </Tab>
                 <Tab eventKey={4} title="Order History">
