@@ -21,7 +21,7 @@ function ProfileNav() {
 
   if (Auth.loggedIn()) {
     return (
-      <Container className = "m-5">
+      <Container className = "m-md-5">
         <Row className = "d-flex justify-content-between">
           <Col lg = {4} >
             <Container className = "d-flex flex-column justify-content-center align-items-center">

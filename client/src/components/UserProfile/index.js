@@ -14,7 +14,7 @@ function UserProfileInfo(props) {
                 justify-content-center    
                 align-items-center
                 align-content-center
-                m-5 p-5" >
+                m-md-5 p-5" >
                     <Col xs ={12}>
                         <Image className="border border-warning" src={avatarImg} roundedCircle width={200} height={200}/>
                      </Col>
