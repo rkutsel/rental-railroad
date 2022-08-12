@@ -3,7 +3,7 @@ import ProductItem from "../ProductItem";
 import { useStoreContext } from "../../utils/GlobalState";
 import { UPDATE_PRODUCTS } from "../../utils/actions";
 import { useQuery } from "@apollo/client";
-import { QUERY_PRODUCTS } from "../../utils/queries";
+import { QUERY_PRODUCTS, QUERY_ME } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
 
 // Bootstrap components
@@ -18,6 +18,20 @@ function ProductList() {
   const { loading, data } = useQuery(QUERY_PRODUCTS);
 
   console.log(state);
+
+  const { data: userData } = useQuery(QUERY_ME);
+  const userProductIds = userData?.me.rentals.map((rental) => rental._id) || [];
+
+  function isOwner(id) {
+    if (userProductIds.includes(id)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  console.log(userProductIds);
+  // console.log(data._id);
 
   useEffect(() => {
     if (data) {
@@ -64,8 +78,13 @@ function ProductList() {
   return (
     <>
       {state.products.length ? (
-        <div className="cards d-flex">
-          <Row xs={1} md={filterProducts().length < 3 ? 2 : 3} className="g-4">
+        <div className="cards d-flex justify-content-center">
+          <Row
+            xs={1}
+            md={filterProducts().length < 2 ? 1 : 2}
+            lg={filterProducts().length < 3 ? 2 : 3}
+            className="g-4"
+          >
             {filterProducts().map((product) => (
               <Col key={product._id}>
                 <ProductItem
@@ -76,6 +95,7 @@ function ProductList() {
                   price={product.pricePerDay}
                   description={product.description}
                   isRented={product.isRented}
+                  isOwner={isOwner(product._id)}
                 />
               </Col>
             ))}

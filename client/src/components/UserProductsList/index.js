@@ -1,5 +1,9 @@
 import React from "react";
 import ProductItem from "../ProductItem";
+
+import { useQuery } from "@apollo/client";
+import { QUERY_ME } from "../../utils/queries";
+
 import { Container } from "react-bootstrap";
 
 // Bootstrap components
@@ -7,6 +11,19 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
 function UserProductsList(props) {
+  const { loading, data } = useQuery(QUERY_ME);
+  const userProductIds = data?.me.rentals.map((rental) => rental._id) || [];
+
+  console.log(userProductIds);
+  console.log(props.products);
+
+  function isOwner(id) {
+    if (userProductIds.includes(id)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   function returnColor() {
     let num = Math.floor(Math.random() * (3 - 1 + 1) + 1);
@@ -22,9 +39,9 @@ function UserProductsList(props) {
 
   return (
     <>
-      { props.products ? (
+      {props.products ? (
         <Container className="cards">
-          <Row  s={1} className="g-4" >
+          <Row s={1} className="g-4">
             {props.products.map((product) => (
               <Col key={product._id}>
                 <ProductItem
@@ -35,6 +52,7 @@ function UserProductsList(props) {
                   price={product.pricePerDay}
                   description={product.description}
                   isRented={product.isRented}
+                  isOwner={isOwner(product._id)}
                 />
               </Col>
             ))}
@@ -42,7 +60,7 @@ function UserProductsList(props) {
         </Container>
       ) : (
         <h3 className="d-flex align-items-center justify-content-center m-5">
-              No products!
+          No products!
         </h3>
       )}
     </>
