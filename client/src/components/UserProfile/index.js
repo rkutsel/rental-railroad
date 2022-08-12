@@ -13,9 +13,8 @@ function UserProfileInfo(props) {
                 flex-sm-row 
                 justify-content-center    
                 align-items-center
-                align-content-center
-                m-md-5 p-5" >
-                    <Col xs ={12}>
+                align-content-center" >
+                    <Col xs ={12} className="d-flex align-content-center justify-content-center">
                         <Image className="border border-warning" src={avatarImg} roundedCircle width={200} height={200}/>
                      </Col>
                      <Col xs={12}>

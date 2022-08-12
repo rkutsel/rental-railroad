@@ -126,6 +126,51 @@ export const UPDATE_PRODUCT = gql`
   }
 `;
 
+export const REMOVE_PRODUCT = gql`
+mutation removeProduct($productId: ID!) {
+  removeProduct(productId: $productId) {
+    firstName
+    lastName
+    email
+    aboutMe
+    isLender
+    isBorrower
+    rentals {
+      _id
+      name
+      description
+      isRented
+      pricePerDay
+      image
+    }
+    wishlist {
+      _id
+      name
+      description
+      isRented
+      pricePerDay
+      image
+    }
+    orders {
+      _id
+      OrderDate
+      rentalStartDate
+      rentalEndDate
+      cost
+      rentedProduct {
+        _id
+        name
+        pricePerDay
+      }
+      rentedUser {
+        firstName
+        lastName
+      }
+    }
+  }
+}
+`;
+
 export const ADD_TO_WISHLIST = gql`
   mutation addToMyWishlist($productId: ID!) {
     addToMyWishlist(productId: $productId) {
