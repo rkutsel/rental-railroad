@@ -2,15 +2,11 @@ import { useQuery } from "@apollo/client";
 import { useStoreContext } from "../../utils/GlobalState";
 import { Link } from "react-router-dom";
 import { QUERY_CATEGORIES } from "../../utils/queries";
-import { idbPromise } from "../../utils/helpers";
-import { Nav, NavDropdown } from "react-bootstrap";
-import { useEffect } from "react";
+import { NavDropdown } from "react-bootstrap";
 import { UPDATE_CURRENT_CATEGORY } from "../../utils/actions";
 
 function CategoryMenu() {
   const [state, dispatch] = useStoreContext();
-
-  const { currentCategory } = state;
 
   const { loading, data } = useQuery(QUERY_CATEGORIES);
 
