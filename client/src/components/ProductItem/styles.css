@@ -89,3 +89,14 @@
   right: 10px;
   text-shadow: 2px 2px 6px black;
 }
+
+@media screen and (max-width: 1024px) {
+  .Card {
+    width: 95%;
+    max-height: 400px;
+  }
+
+  .Card-body {
+    padding: 1em 1em 9em 1em;
+  }
+}
