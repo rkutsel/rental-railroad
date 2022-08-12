@@ -1,0 +1,11 @@
+.btn-size {
+    width: 30%;
+    background-color:#9227FB;
+    border-color: #9227FB;
+}
+
+.btn-size:hover {
+    background-color:#9227FB;
+    border-color: #9227FB;
+}
+
