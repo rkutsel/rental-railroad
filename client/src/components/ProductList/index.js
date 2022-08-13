@@ -21,9 +21,18 @@ function ProductList() {
 
   const { data: userData } = useQuery(QUERY_ME);
   const userProductIds = userData?.me.rentals.map((rental) => rental._id) || [];
+  const userWishlistIds = data?.me.wishlist.map((wishlist) => wishlist._id) || [];
 
   function isOwner(id) {
     if (userProductIds.includes(id)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function onWishlist(id) {
+    if (userWishlistIds.includes(id)) {
       return true;
     } else {
       return false;
@@ -96,6 +105,8 @@ function ProductList() {
                   description={product.description}
                   isRented={product.isRented}
                   isOwner={isOwner(product._id)}
+                  onWishlist={onWishlist(product._id)}
+
                 />
               </Col>
             ))}

@@ -13,12 +13,21 @@ import Row from "react-bootstrap/Row";
 function UserProductsList(props) {
   const { loading, data } = useQuery(QUERY_ME);
   const userProductIds = data?.me.rentals.map((rental) => rental._id) || [];
+  const userWishlistIds = data?.me.wishlist.map((wishlist) => wishlist._id) || [];
 
   console.log(userProductIds);
   console.log(props.products);
 
   function isOwner(id) {
     if (userProductIds.includes(id)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function onWishlist(id) {
+    if (userWishlistIds.includes(id)) {
       return true;
     } else {
       return false;
@@ -53,6 +62,7 @@ function UserProductsList(props) {
                   description={product.description}
                   isRented={product.isRented}
                   isOwner={isOwner(product._id)}
+                  onWishlist={onWishlist(product._id)}
                 />
               </Col>
             ))}
