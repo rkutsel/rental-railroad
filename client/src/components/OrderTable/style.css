@@ -1,0 +1,7 @@
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgb(189, 184, 240);
+}
+
+.table-striped thead th{
+    font-size: 1.25em;
+}

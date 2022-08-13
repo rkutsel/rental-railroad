@@ -1,25 +1,48 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ME } from "../../utils/queries";
 import { ADD_TO_WISHLIST } from "../../utils/mutations";
-// import { DELETE_PRODUCT } from "../../utils/mutations";
+import { REMOVE_PRODUCT } from "../../utils/mutations";
 import { UPDATE_PRODUCT } from "../../utils/mutations";
 import Auth from "../../utils/auth";
+import { useNavigate } from "react-router-dom";
+
+import { loadStripe } from "@stripe/stripe-js";
+import { useLazyQuery } from "@apollo/client";
+import { QUERY_CHECKOUT } from "../../utils/queries";
+import { useParams } from "react-router-dom";
 
 // Styling
 import "./styles.css";
 import Button from "react-bootstrap/Button";
 
+const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
+
 const ProductDetailBtns = ({ productId, isRented }) => {
   const [addToMyWishlist] = useMutation(ADD_TO_WISHLIST);
-  // const [deleteProduct, { error }] = useMutation(DELETE_PRODUCT);
+  const [removeProduct, { error }] = useMutation(REMOVE_PRODUCT);
   const [updateProduct] = useMutation(UPDATE_PRODUCT);
 
-  const { loading, data } = useQuery(QUERY_ME);
-  const user = data?.me || {};
+  // const { loading, data: me } = useQuery(QUERY_ME);
+  const userMe = useQuery(QUERY_ME);
+  console.log(userMe?.data?.me);
+  const user = userMe?.data?.me || {};
 
   const userRentals = user.rentals;
+
+  let navigate = useNavigate();
+
+  const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
+
+  useEffect(() => {
+    console.log(data, "this");
+    if (data) {
+      stripePromise.then((res) => {
+        res.redirectToCheckout({ sessionId: data.checkout.session });
+      });
+    }
+  });
 
   // Checking if user owns product to render the correct btn components
   function checkOwnership(product) {
@@ -72,13 +95,19 @@ const ProductDetailBtns = ({ productId, isRented }) => {
       <>
         {checkedInBtn}
         <Button
-        // onClick={() =>
-        //   removeProduct({
-        //     variables: {
-        //       productId: productId,
-        //     },
-        //   })
-        // }
+          onClick={async () => {
+            const removedProductFromUser = await removeProduct({
+              variables: {
+                productId: productId,
+              },
+            });
+
+            if (removedProductFromUser) {
+              setTimeout(() => {
+                navigate("/profile", { replace: true });
+              }, 1000);
+            }
+          }}
         >
           Remove
         </Button>
@@ -89,15 +118,29 @@ const ProductDetailBtns = ({ productId, isRented }) => {
   // If user does not own the product
   return (
     <>
-      <Button className="mx-4">Click to rent</Button>
       <Button
-        onClick={() =>
-          addToMyWishlist({
+        onClick={() => {
+          getCheckout({
+            variables: { products: productId },
+          });
+        }}
+        className="mx-4"
+      >
+        Click to rent
+      </Button>
+      <Button
+        onClick={async () => {
+          const addedProduct = await addToMyWishlist({
             variables: {
               productId: productId,
             },
-          })
-        }
+          });
+          if (addedProduct) {
+            setTimeout(() => {
+              navigate("/profile", { replace: true });
+            }, 1000);
+          }
+        }}
       >
         Add to wishlist&nbsp;
         <svg

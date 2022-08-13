@@ -1,120 +1,69 @@
-# rental-railroad
-Code Base For Group Project
+# Rental Railroad
 
-# Opinionated Dev Guide
+This MERN stack single-page application delivers a user-driven marketplace where users can rent out their items and rent items from others.
 
-## This guide has these assumptions:
+## Table of Contents
 
-```markdown
-- Your workstation is running on a Linux-based operating system, including Apple's Macbooks. 
-- You use zsh or bash as your primary shell. Bonus point if you know their differences.
-- You use VS Code as your main IDE.
+- [Purpose](#purpose)
+- [Collaborators](#collaborators)
+- [Goal](#goal)
+- [Technology Used](#technology-used)
+- [Usage](#usage)
+- [Deployment](#deployment)
+- [License](#license)
 
-Your VS Code has these extensions installed:
+## Purpose
 
-- Code Spell Checker
-- Live Server
-- open-in-browser
-- Prettier Code Formatter
-```
+The purpose of this project is to address parents' and caregivers' need to obtain items for their children that they do not wish to keep long-term. Children grow so fast and often require things they're only going to use once, for example, costumes, or for a short time, for example, infant toys. For that reason, we have created a space that allows users to rent out their items and rent items from others.
 
-## Java Script naming convention and variable choices
+We have designed a user-friendly and user-driven marketplace for parents and caregivers to interact with each other and fill these temporary needs.
 
-### 01. Declaring Your Variables
+## Collaborators
 
-```Java Script
-//Always declare variables with const:
-const myConstVar;
-```
+- [Rajeswari Marimuthu](https://github.com/rajeswarivmarimuthu)
+- [Logan Monson](https://github.com/Loggamon)
+- [Roman Kutsel](https://github.com/rkutsel)
+- [Courtney Struelens](https://github.com/struelensc)
 
-```Java Script
-//If you realize that the value of the variable needs to change use let:
-let myLetVar;
-```
+## Goal
 
-```
-Use let when you know that the value of a variable will change.
-Use const for every other variable.
-Do not use var.
-```
+The goal is to deliver a single-page full-stack application for users to interact.
 
-### 02. Naming Your Variables
+The home page of Rental Railway allows users to view all rentals on the platform. These rentals can be reduced using the category dropdown menu provided on the navigation bar. From the navigation bar, users can also click on `Login` where they can either log in or create a profile which will allow them to rent out items, comment on other users' items, rent items, and save items to a wishlist.
 
-```Java Script
-//Use nouns to describe your variables and give them meaningful names:
-const userInput = {};
-let rawData = "";
-```
+From the user's profile page, the user will see a `My Rentals`, `Wishlist`, and an `Order History` tab. From the `My Rentals` tab, the user can click the `Add Product` button which will direct them to fill out a form that will list a new product to rent. This new product will be listed under the user's `My Rentals` tab until removed. When a user adds a product to their wishlist, that product will populate under the user's `Wishlist` tab. When a user completes an order, the details will be cataloged under the `Order History` tab.
 
-### 03. Naming Your Functions
+From anywhere a product card is populated, the user can click on the card to be shown the product details page. This page will show the user the product photo, name, description, price per day, and comments. From this page, if the user isn't the owner, the user can leave a comment about the product, click on the `Add to wishlist` button, and click on the `Rent` button. If the owner is viewing their product's details page, the owner can click on the `Check Out` or `Check In` button and the `Remove` button.
 
-```Java Script
-//Use verbs to describe your functions and give them meaningful names:
-function captureUserInput() {return this}
+## Technology Used
 
-function renderStorageContent() {return this}
-```
+- HTML
+- CSS and Bootstrap
+- Javascript
+- React from the front end
+- GraphQL with a Node.js and Express.js server
+- MongoDB and the Mongoose ODM for the database
+- Firebase
+- Stripe for payment
 
-## Git Workflow
+## Usage
 
-It's almost always better to have multiple branches for development. At the most fundamental level there should be at least two branches:
+To get started, from the root directory run `npm run develop` which should build all components and start the client and server components, and redirect you to http://localhost:3000. Optionally you can run `npm run seed` which will load the database with data.
 
-1. `main` => production code base
-2. `develop` => for a continuous, non-blocking development workflow
+## Deployment
 
-There can be more than those two but for the purpose of this guide two branches is more than enough to get a good start.
+See below for a screenshot of the application and a link to the deployed webpage.
 
-Things we don't want to do when working with `main` or `develop` branches:
+https://rental-railroad.herokuapp.com/
 
-1. Doing development work in `main` or `develop`
-2. Merging your changes directly into `main` or `develop`
-3. Having no protections of the `main`ranch
+### Homepage
 
-### General Dev Workflow
+![Screenshot of homepage](./rental-railroad-homepage.png)
 
-```bash
-# feature_branch=(CREATE PR)=(REVIEW/TEST)=(MERGE)=>develop(CREATE PR)=(REVIEW/TEST)=(MERGE)=>main
+### Product Page
 
-#==DEVELOP BRANCH SETUP
-# 01. create develop branch locally.
-git branch -b develop
-# 02. set upstream develop branch for the first time. It will set it up remotely.
-git push --set-upstream origin develop
+![Screenshot of product page](./rental-railroad-product-page.png)
 
-#==FEATURE BRANCH SETUP
-# 01. create a feature branch locally.
-git branch -b feature_branch_name
-# 02. set upstream develop feature_branch_name for the first time. It will set it up remotely.
-git push --set-upstream origin feature_branch_name
-# 03a. merge develop into your feature branch
-git merge develop
-# 03b. rebase develop into your feature branch
-git rebase develop
+## License
 
-
-#==WORKING WITH EXISTING BRANCHES
-# 01. checkout a remote branch i.e. existing develop branch
-git checkout develop
-
-# 02. pull changes from an existing branch
-git checkout develop
-git pull
-
-# 03. submit a PR request from your feature branch
-git add . #adds current dir
-git commit -m "your commit message"
-git push origin feature_branch_name
-```
-
-## Feature Branch Naming Convention
-
-Feature branches need to have a clear format that describes the owner and the inteded purpose. 
-It should follow this format => `[owner]-[purpose]-[description]`. Bellow are a few examples. 
-
-```bash
-# All feature branches need to have a clear format that describes the intent of it.  
-$ git checkout -b rkutsel_feature-add-auth-module # clearly explains who owns it and what is the purpose of it. 
-$ git checkout -b rkutsel_wip-add-support-for-heroku # work in progress that won't be done soon. 
-$ git checkout -b rkutsel_bug-fix-authentication-failure # work in progress that won't be done soon. 
-$ git checkout -b rkutsel_info-auth-module-documentation # work in progress that won't be done soon. 
-```
+See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT License).
