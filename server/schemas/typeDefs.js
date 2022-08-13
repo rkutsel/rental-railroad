@@ -87,14 +87,7 @@ const typeDefs = gql`
     me: User
     fullname: fullName
 
-    checkout(
-      OrderDate: String!
-      rentalStartDate: String!
-      rentalEndDate: String!
-      rentedProduct: ID!
-      rentedUser: ID
-      cost: Float!
-    ): Checkout
+    checkout(products: [ID]!): Checkout
   }
 
   type Mutation {

@@ -5,7 +5,6 @@ const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
 const file = require("../utils/datastore");
 
-
 const resolvers = {
   Query: {
     categories: async () => {
@@ -91,23 +90,20 @@ const resolvers = {
 
     checkout: async (parent, args, context) => {
       const url = new URL(context.headers.referer).origin;
-      const order = new Order(args);
+      const order = new Order({ rentedProduct: args.products });
       const line_items = [];
 
-      const { rentedProduct } = await order.populate({
-        path: "rentedProduct",
-        select: ["name"],
-      });
+      const { rentedProduct } = await order.populate("rentedProduct");
 
       const product = await stripe.products.create({
         name: rentedProduct.name,
         description: rentedProduct.description,
-        images: [`${url}/images/${rentedProduct.image}`],
+        images: [rentedProduct.image],
       });
 
       const price = await stripe.prices.create({
         product: product.id,
-        unit_amount: order.cost,
+        unit_amount: rentedProduct.pricePerDay * 100,
         currency: "usd",
       });
 
@@ -142,7 +138,6 @@ const resolvers = {
     },
 
     addToMyWishlist: async (parent, { productId }, context) => {
-
       if (context.user) {
         const user = await User.findByIdAndUpdate(
           { _id: context.user._id },
@@ -186,7 +181,6 @@ const resolvers = {
     // Function to create product
     addProduct: async (parent, args, context) => {
       if (context.user) {
-
         const addedProduct = await Product.create(args);
 
         await User.findByIdAndUpdate(
@@ -200,30 +194,25 @@ const resolvers = {
       throw new AuthenticationError("Not logged in");
     },
 
-    removeProduct: async (parent, {productId}, context) => {
-
+    removeProduct: async (parent, { productId }, context) => {
       try {
         if (context.user) {
-
-          let [product, user ] = await Promise.all([
+          let [product, user] = await Promise.all([
             Product.findOneAndDelete({ _id: productId }),
             User.findOneAndUpdate(
               { _id: context.user._id },
               { $pull: { rentals: productId } },
               { new: true }
-            )
-          ])
+            ),
+          ]);
           return user;
-        }
-        else {
+        } else {
           throw new AuthenticationError("Not logged in");
         }
-    }
-    catch (err) {
-      console.log(err);        
-      console.log ("somthing went wrong while deleting product")
-    }; 
-
+      } catch (err) {
+        console.log(err);
+        console.log("somthing went wrong while deleting product");
+      }
     },
 
     // Function to update product
