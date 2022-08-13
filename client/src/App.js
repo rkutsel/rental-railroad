@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useParams,
+} from "react-router-dom";
 import {
   ApolloClient,
   InMemoryCache,
@@ -14,6 +19,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Detail from "./pages/Detail";
 import Profile from "./pages/Profile";
+import Success from "./pages/Success";
 import Nav from "./components/Nav";
 import { StoreProvider } from "./utils/GlobalState";
 
@@ -53,6 +59,7 @@ function App() {
               <Route path="/products/:productId" element={<Detail />} />
               <Route path="/products/addnew" element={<AddProduct />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/success" element={<Success />} />
               <Route path="*" element={<NoMatch />} />
             </Routes>
           </StoreProvider>
