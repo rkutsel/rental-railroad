@@ -15,9 +15,6 @@ function UserProductsList(props) {
   const userProductIds = data?.me.rentals.map((rental) => rental._id) || [];
   const userWishlistIds = data?.me.wishlist.map((wishlist) => wishlist._id) || [];
 
-  console.log(userProductIds);
-  console.log(props.products);
-
   function isOwner(id) {
     if (userProductIds.includes(id)) {
       return true;
@@ -50,7 +47,7 @@ function UserProductsList(props) {
     <>
       {props.products ? (
         <Container className="cards">
-          <Row  s={1} md={2} className="g-4" >
+          <Row s={1} md={2} className="g-4">
             {props.products.map((product) => (
               <Col key={product._id}>
                 <ProductItem

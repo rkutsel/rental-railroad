@@ -63,12 +63,6 @@ const typeDefs = gql`
     lastName: String
   }
 
-  scalar Upload
-
-  type File {
-    filename: String!
-  }
-
   type Checkout {
     session: ID
   }
@@ -133,7 +127,6 @@ const typeDefs = gql`
 
     updateProduct(_id: ID!, isRented: Boolean!): Product
     removeProduct(productId: ID!): User
-    singleUpload(file: Upload!): Boolean!
     addCommentToProduct(productId: ID!, comment: String!): Product
   }
 `;

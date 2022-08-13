@@ -17,8 +17,6 @@ function ProductList() {
 
   const { loading, data } = useQuery(QUERY_PRODUCTS);
 
-  console.log(state);
-
   const { data: userData } = useQuery(QUERY_ME);
   const userProductIds = userData?.me.rentals.map((rental) => rental._id) || [];
   const userWishlistIds = userData?.me.wishlist.map((wishlist) => wishlist._id) || [];
@@ -38,9 +36,6 @@ function ProductList() {
       return false;
     }
   }
-
-  console.log(userProductIds);
-  // console.log(data._id);
 
   useEffect(() => {
     if (data) {
@@ -82,7 +77,6 @@ function ProductList() {
       return "purple";
     }
   }
-  console.log(state.products.length);
 
   return (
     <>

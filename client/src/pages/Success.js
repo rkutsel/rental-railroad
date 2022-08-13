@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useMutation } from "@apollo/client";
 import Jumbotron from "../components/Jumbotron";
-import Nav from "../components/Nav";
 import { ADD_ORDER } from "../utils/mutations";
 import { idbPromise } from "../utils/helpers";
 
@@ -43,7 +42,7 @@ function Success() {
           style={{ fontFamily: "Fredoka One", color: "#03b6fc" }}
           className="display-2 text-center"
         >
-          Thank you renting me!
+          Thank you for renting me!
         </h2>
         <h2
           style={{ fontFamily: "Fredoka One", color: "#c7145e" }}
