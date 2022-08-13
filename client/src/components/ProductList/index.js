@@ -21,7 +21,7 @@ function ProductList() {
 
   const { data: userData } = useQuery(QUERY_ME);
   const userProductIds = userData?.me.rentals.map((rental) => rental._id) || [];
-  const userWishlistIds = data?.me.wishlist.map((wishlist) => wishlist._id) || [];
+  const userWishlistIds = userData?.me.wishlist.map((wishlist) => wishlist._id) || [];
 
   function isOwner(id) {
     if (userProductIds.includes(id)) {
