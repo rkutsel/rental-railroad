@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { v4 as uuidv4 } from "uuid";
@@ -55,9 +55,7 @@ function ProductAddNew() {
       });
 
       const response = mutationResponse.data;
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
     setTimeout(() => {
       navigate("/profile");
     }, 1000);
