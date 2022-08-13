@@ -1,11 +1,9 @@
 import React from "react";
 import ProductList from "../components/ProductList";
 import { useStoreContext } from "../utils/GlobalState";
-import { QUERY_CATEGORY, QUERY_ME } from "../utils/queries";
+import { QUERY_CATEGORY } from "../utils/queries";
 import { useQuery } from "@apollo/client";
 import Container from "react-bootstrap/Container";
-
-// import Cart from "../components/Cart";
 
 const Home = () => {
   const [state] = useStoreContext();

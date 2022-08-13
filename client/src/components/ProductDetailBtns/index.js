@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 import { useLazyQuery } from "@apollo/client";
 import { QUERY_CHECKOUT } from "../../utils/queries";
-import { useParams } from "react-router-dom";
 
 // Styling
 import "./styles.css";
@@ -24,9 +23,7 @@ const ProductDetailBtns = ({ productId, isRented }) => {
   const [removeProduct, { error }] = useMutation(REMOVE_PRODUCT);
   const [updateProduct] = useMutation(UPDATE_PRODUCT);
 
-  // const { loading, data: me } = useQuery(QUERY_ME);
   const userMe = useQuery(QUERY_ME);
-  console.log(userMe?.data?.me);
   const user = userMe?.data?.me || {};
 
   const userRentals = user.rentals;
@@ -36,7 +33,6 @@ const ProductDetailBtns = ({ productId, isRented }) => {
   const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
 
   useEffect(() => {
-    console.log(data, "this");
     if (data) {
       stripePromise.then((res) => {
         res.redirectToCheckout({ sessionId: data.checkout.session });
