@@ -1,0 +1,16 @@
+.btn-size {
+  width: 30%;
+  background-color: #9227fb;
+  border-color: #9227fb;
+}
+
+.btn-size:hover {
+  background-color: #9227fb;
+  border-color: #9227fb;
+}
+
+@media screen and (max-width: 1024px) {
+  .btn-size {
+    width: fit-content;
+  }
+}

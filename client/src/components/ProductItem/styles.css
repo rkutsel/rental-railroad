@@ -1,0 +1,102 @@
+.Card {
+  background: #fff;
+  width: 24em;
+  border-radius: 0.6em;
+  margin: 1em;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 13px 27px -5px hsla(240, 30.1%, 28%, 0.25),
+    0 8px 16px -8px hsla(0, 0%, 0%, 0.3), 0 -6px 16px -6px hsla(0, 0%, 0%, 0.03);
+  transition: all ease 200ms;
+  height: 430px;
+
+  --lh: 1.4rem;
+  line-height: var(--lh);
+
+  position: relative;
+}
+
+.Card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 13px 40px -5px hsla(240, 30.1%, 28%, 0.12),
+    0 8px 32px -8px hsla(0, 0%, 0%, 0.14),
+    0 -6px 32px -6px hsla(0, 0%, 0%, 0.02);
+}
+
+.Card img {
+  width: 100%;
+}
+
+.Card h2 {
+  color: #fff;
+  margin-top: -0.2em;
+  line-height: 1.4;
+  font-size: 1.3em;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif;
+  transition: all ease-in 100ms;
+}
+
+.Card span {
+  font-size: 1em;
+  color: #fff;
+}
+
+.Card p {
+  color: #fff;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+
+.Card h5 {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1em;
+  letter-spacing: 0.1em;
+  margin: 1.4em 0 0 0;
+}
+
+.Card-body {
+  padding: 1em 1em 6em 1em;
+}
+
+.pink {
+  background: linear-gradient(to right, #fd4dac, #fe86c6) !important;
+}
+
+.orange {
+  background: linear-gradient(to right, #fe6b48, #fe8e72) !important;
+}
+
+.purple {
+  background: linear-gradient(to right, #9227fb, #ad5ffc) !important;
+}
+
+.overlay-div {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-color: grey;
+  opacity: 0.7;
+  color: white;
+}
+
+.owner-div {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  text-shadow: 2px 2px 6px black;
+}
+
+@media screen and (max-width: 1024px) {
+  .Card {
+    width: 95%;
+    max-height: 400px;
+  }
+
+  .Card-body {
+    padding: 1em 1em 9em 1em;
+  }
+}
