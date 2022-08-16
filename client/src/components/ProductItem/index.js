@@ -23,6 +23,7 @@ export default class Card extends Component {
 
     let overlay;
     let ownership;
+    let wished;
 
     if (this.props.isOwner) {
       // overlay = null;
@@ -32,6 +33,27 @@ export default class Card extends Component {
           <h1>⭐</h1>
         </div>
       );
+    } else if (this.props.isRented && this.props.onWishlist) {
+      overlay = (
+        <div className="overlay-div d-flex justify-content-center align-items-center">
+          <h1 className="owner-div d-flex justify-content-center align-items-center">❤️</h1>
+          <h1>Rented</h1>
+        </div>
+      );
+      ownership = null;
+      wished = (
+        <div className="owner-div d-flex justify-content-center align-items-center">
+          <h1>❤️</h1>
+        </div>
+      );
+    } else if (!this.props.isRented && this.props.onWishlist) {
+      overlay = null;
+      ownership = null;
+      wished = (
+        <div className="owner-div d-flex justify-content-center align-items-center">
+          <h1>❤️</h1>
+        </div>
+      );
     } else if (this.props.isRented) {
       overlay = (
         <div className="overlay-div d-flex justify-content-center align-items-center">
@@ -39,13 +61,16 @@ export default class Card extends Component {
         </div>
       );
       ownership = null;
+      wished = null;
     } else {
       overlay = null;
       ownership = null;
+      wished = null;
     }
 
     return (
       <div className="Card">
+        {wished}
         {overlay}
         {ownership}
         <Link to={`/products/${this.props._id}`}>{img}</Link>
